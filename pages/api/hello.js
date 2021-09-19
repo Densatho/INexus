@@ -3,7 +3,7 @@
 export default function handler(req, res) {
   res.setHeader("Cache-Control", "s-maxage=10, stale-while-revalidate");
 
-  res.status(200).json([
+  res.json([
     {
       name: "John Doe",
       age: 20,
