@@ -6,7 +6,7 @@ export default function handler(req, res) {
   res.json([
     {
       name: "John Doe",
-      age: 20,
+      age: 25,
       from: "United States of America",
     },
     {
