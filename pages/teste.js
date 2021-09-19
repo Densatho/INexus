@@ -23,7 +23,8 @@ function Home(props) {
 }
 
 export async function getStaticProps(context) {
-  const response = await fetch("http://localhost:3000/api/hello");
+  const url = process.env.API_URL + "hello";
+  const response = await fetch(url);
   const users = await response.json();
   console.log(`> Get static props:`);
   console.log(`  > Next Api:`, users);
