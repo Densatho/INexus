@@ -1,5 +1,4 @@
 import styles from "src/styles/Home.module.css";
-import handler from "./api/hello";
 
 function Home(props) {
   const users = props.users;
@@ -23,31 +22,16 @@ function Home(props) {
   );
 }
 
-export function getStaticProps(props) {
-  // const users = handler(p, NextApiResponse);
+export async function getStaticProps(context) {
+  const response = await fetch("http://localhost:3000/api/hello");
+  const users = await response.json();
   console.log(`> Get static props:`);
-  console.log(`  > Next Api:`);
+  console.log(`  > Next Api:`, users);
   return {
     props: {
-      users: [
-        {
-          name: "John Doe",
-          age: 20,
-          from: "United States of America",
-        },
-        {
-          name: "Lucas Henrique Azzi",
-          age: 21,
-          from: "Brazil",
-        },
-      ],
+      users: users,
     },
   };
-}
-
-export function GetStaticPathsResult(props) {
-  console.log(`> Path Results:`);
-  console.log(`  > props:`, props);
 }
 
 export default Home;

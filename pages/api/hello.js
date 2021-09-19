@@ -9,7 +9,7 @@ export default function handler(req, res) {
     },
     {
       name: "Lucas Henrique Azzi",
-      age: 21,
+      age: 22,
       from: "Brazil",
     },
   ]);
