@@ -13,26 +13,8 @@ function Home(props) {
         of Legends
       </h1>
       <p className={styles.description}>usuários cadastrados: </p>
-      {Object.entries(users).map(([key, value]) => (
-        <p className={styles.description}>
-          {value.name}, {value.age} anos do {value.from}
-        </p>
-      ))}
     </div>
   );
-}
-
-export async function getStaticProps(context) {
-  const url = process.env.API_URL + "hello";
-  const response = await fetch(url);
-  const users = await response.json();
-  console.log(`> Get static props:`);
-  console.log(`  > Next Api:`, users);
-  return {
-    props: {
-      users: users,
-    },
-  };
 }
 
 export default Home;
