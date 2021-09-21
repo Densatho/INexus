@@ -1,17 +1,23 @@
 import styles from "src/styles/Home.module.css";
 import { Box, Flex } from "@chakra-ui/react";
 import Layout from "src/components/Layout";
+import Image from "next/image";
 
 function Home(props) {
-  const users = props.users;
   return (
     <Layout title="Home" bgColor="#FF000">
       <Box marginTop={16} w="1300px" marginLeft="auto" marginRight="auto">
         <h1 className={styles.title}>
-          Bem vindo a <a style={{ color: "#48ae2b" }}>Nexus!</a>
+          <span>
+            Bem vindo à{" "}
+            <Image src="/logo.png" alt="Logo" width="150px" height="30px" />
+          </span>
         </h1>
         <p className={styles.description}>
-          Um site de apostas dos campeonatos oficiais de League of Legends
+          Ainda estamos em construção😕. <br></br>
+          Mas não se preocupe!<br></br>
+          Volte em alguns dias para acessar o maior site de apostas de League Of
+          Legends!
         </p>
       </Box>
     </Layout>
