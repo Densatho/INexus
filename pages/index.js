@@ -2,6 +2,7 @@ import styles from "src/styles/Home.module.css";
 import { Box, Flex } from "@chakra-ui/react";
 import Layout from "src/components/Layout";
 import Image from "next/image";
+import Navbar from "src/components/Navbar";
 
 function Home(props) {
   return (
