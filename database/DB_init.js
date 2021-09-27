@@ -5,17 +5,11 @@ const Team = require("./models/team");
 const Admin = require("./models/admin");
 const Games = require("./models/games");
 const Bet = require("./models/bet");
-const UserConnection = require("./DBConnection/userConnection");
-const config = require("./config");
-
-const sequelize = new Sequelize(config);
 
 authenticate = async () => {
   try {
-    await sequelize.authenticate();
-    console.log("Connection has been established succesfully");
-
     await User.sync();
+
     await League.sync();
     await Team.sync();
 
@@ -39,4 +33,5 @@ authenticate = async () => {
     console.log("Unable to connect to the database.", error);
   }
 };
-authenticate();
+
+module.exports = authenticate;

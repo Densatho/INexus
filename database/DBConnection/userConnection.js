@@ -3,6 +3,14 @@ const User = require("../models/user");
 const bcrypt = require("bcryptjs");
 
 module.exports = {
+  async getAllUsers() {
+    try {
+      let users = await User.findAll({
+        attributes: ["NICKNAME", "BIRTHDAY", "AVATAR_URL", "EMAIL"],
+      });
+      return users;
+    } catch (error) {}
+  },
   async getUserByNickname(nickname) {
     let user;
     try {

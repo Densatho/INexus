@@ -36,8 +36,12 @@ const databaseConfig = {
 class User extends Model {
   login(password) {
     if (bcrypt.compareSync(password, this.HASHED_PASSWORD)) {
-      console.log("Login");
+      return true;
     }
+    return false;
+  }
+  getNickname() {
+    return this.NICKNAME;
   }
 }
 User.init(databaseConfig, { sequelize, modelName: "USER" });
