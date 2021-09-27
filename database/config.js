@@ -3,4 +3,4 @@ config = {
   storage: "database.sqlite",
 };
 
-module.exports.config = config;
+module.exports = config;

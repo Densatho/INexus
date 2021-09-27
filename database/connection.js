@@ -1,11 +1,12 @@
-const { Sequelize } = require("sequelize");
-const { User } = require("./models/user");
-const { League } = require("./models/league");
-const { Team } = require("./models/team");
-const { Admin } = require("./models/admin");
-const { Games } = require("./models/games");
-const { Bet } = require("./models/bet");
-const { config } = require("./config");
+const { Sequelize, Op } = require("sequelize");
+const User = require("./models/user");
+const League = require("./models/league");
+const Team = require("./models/team");
+const Admin = require("./models/admin");
+const Games = require("./models/games");
+const Bet = require("./models/bet");
+const UserConnection = require("./DBConnection/userConnection");
+const config = require("./config");
 
 const sequelize = new Sequelize(config);
 
@@ -32,19 +33,8 @@ authenticate = async () => {
 
     Bet.belongsTo(User);
     Bet.belongsTo(Games);
+
     await Bet.sync();
-
-    // const teste = await User.create({
-    //   NICKNAME: "Densatho",
-    //   HASHED_PASSWORD: "TESTE",
-    //   BIRTHDAY: new Date("10/11/2000"),
-    //   HASHED_CPF: "123.456.789-01",
-    //   EMAIL: "dsjacinthotre@gmail.com",
-    // });
-
-    // console.log(teste instanceof User);
-    // console.log(teste.NICKNAME);
-    // console.log("Test was saved to the database!");
   } catch (error) {
     console.log("Unable to connect to the database.", error);
   }

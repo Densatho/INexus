@@ -1,5 +1,5 @@
 const { Sequelize, DataTypes, Model } = require("sequelize");
-const { config } = require("../config");
+const config = require("../config");
 
 const sequelize = new Sequelize(config);
 
@@ -18,4 +18,4 @@ const databaseConfig = {
 class League extends Model {}
 League.init(databaseConfig, { sequelize, modelName: "LEAGUE" });
 
-module.exports.League = League;
+module.exports = League;

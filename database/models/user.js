@@ -1,5 +1,6 @@
 const { Sequelize, DataTypes, Model } = require("sequelize");
-const { config } = require("../config");
+const config = require("../config");
+const bcrypt = require("bcryptjs");
 
 const sequelize = new Sequelize(config);
 
@@ -32,7 +33,13 @@ const databaseConfig = {
   },
 };
 
-class User extends Model {}
+class User extends Model {
+  login(password) {
+    if (bcrypt.compareSync(password, this.HASHED_PASSWORD)) {
+      console.log("Login");
+    }
+  }
+}
 User.init(databaseConfig, { sequelize, modelName: "USER" });
 
-module.exports.User = User;
+module.exports = User;
