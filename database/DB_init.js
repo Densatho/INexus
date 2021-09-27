@@ -29,9 +29,9 @@ authenticate = async () => {
     Bet.belongsTo(Games);
 
     await Bet.sync();
+    console.log("Database initialized");
   } catch (error) {
     console.log("Unable to connect to the database.", error);
   }
 };
-
-module.exports = authenticate;
+authenticate();
