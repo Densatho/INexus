@@ -10,6 +10,14 @@ const databaseConfig = {
     primaryKey: true,
     allowNull: false,
   },
+  NAME: {
+    type: DataTypes.TEXT,
+    allowNull: false,
+  },
+  LASTNAME: {
+    type: DataTypes.TEXT,
+    allowNull: false,
+  },
   HASHED_PASSWORD: {
     type: DataTypes.STRING(64),
     allowNull: false,

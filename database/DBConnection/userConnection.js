@@ -6,7 +6,14 @@ module.exports = {
   async getAllUsers() {
     try {
       let users = await User.findAll({
-        attributes: ["NICKNAME", "BIRTHDAY", "AVATAR_URL", "EMAIL"],
+        attributes: [
+          "NICKNAME",
+          "NAME",
+          "LASTNAME",
+          "BIRTHDAY",
+          "AVATAR_URL",
+          "EMAIL",
+        ],
       });
       return users;
     } catch (error) {}
@@ -24,13 +31,15 @@ module.exports = {
       return user[0];
     } catch (error) {}
   },
-  async createUser(nickname, password, birthday, cpf, email) {
+  async createUser(nickname, name, lastName, password, birthday, cpf, email) {
     let hashed_password = bcrypt.hashSync(password, 10);
     let hashed_cpf = bcrypt.hashSync(cpf, 10);
 
     try {
       await User.create({
         NICKNAME: nickname,
+        NAME: name,
+        LASTNAME: lastName,
         HASHED_PASSWORD: hashed_password,
         BIRTHDAY: new Date(birthday),
         HASHED_CPF: hashed_cpf,
