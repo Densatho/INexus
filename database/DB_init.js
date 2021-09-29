@@ -2,7 +2,6 @@ const { Sequelize, Op } = require("sequelize");
 const User = require("./models/user");
 const League = require("./models/league");
 const Team = require("./models/team");
-const Admin = require("./models/admin");
 const Games = require("./models/games");
 const Bet = require("./models/bet");
 
@@ -12,9 +11,6 @@ authenticate = async () => {
 
     await League.sync();
     await Team.sync();
-
-    Admin.belongsTo(User);
-    await Admin.sync();
 
     Games.belongsTo(League);
     Games.belongsTo(Team, {

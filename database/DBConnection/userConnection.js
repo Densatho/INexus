@@ -10,15 +10,41 @@ module.exports = {
           "NICKNAME",
           "NAME",
           "LASTNAME",
+          "CPF",
           "BIRTHDAY",
           "AVATAR_URL",
           "EMAIL",
+          "createdAt",
+          "updatedAt",
         ],
       });
       return users;
     } catch (error) {}
   },
-  async getUserByNickname(nickname) {
+  async getAllAdmins() {
+    try {
+      let admin = await User.findAll({
+        attributes: [
+          "NICKNAME",
+          "NAME",
+          "LASTNAME",
+          "CPF",
+          "BIRTHDAY",
+          "AVATAR_URL",
+          "EMAIL",
+          "createdAt",
+          "updatedAt",
+        ],
+        where: {
+          IS_ADMIN: {
+            [Op.eq]: true,
+          },
+        },
+      });
+      return admin;
+    } catch (error) {}
+  },
+  async getUserByNicknameLogin(nickname) {
     let user;
     try {
       user = await User.findAll({
@@ -31,9 +57,32 @@ module.exports = {
       return user[0];
     } catch (error) {}
   },
+  async getUserByNickname(nickname) {
+    let user;
+    try {
+      user = await User.findAll({
+        attributes: [
+          "NICKNAME",
+          "NAME",
+          "LASTNAME",
+          "CPF",
+          "BIRTHDAY",
+          "AVATAR_URL",
+          "EMAIL",
+          "createdAt",
+          "updatedAt",
+        ],
+        where: {
+          NICKNAME: {
+            [Op.eq]: nickname,
+          },
+        },
+      });
+      return user[0];
+    } catch (error) {}
+  },
   async createUser(nickname, name, lastName, password, birthday, cpf, email) {
     let hashed_password = bcrypt.hashSync(password, 10);
-    let hashed_cpf = bcrypt.hashSync(cpf, 10);
 
     try {
       await User.create({
@@ -42,11 +91,80 @@ module.exports = {
         LASTNAME: lastName,
         HASHED_PASSWORD: hashed_password,
         BIRTHDAY: new Date(birthday),
-        HASHED_CPF: hashed_cpf,
+        CPF: cpf,
         EMAIL: email,
       });
       return true;
     } catch (error) {
+      console.log(error);
+      return false;
+    }
+  },
+  async createAdmin(nickname, name, lastName, password, birthday, cpf, email) {
+    let hashed_password = bcrypt.hashSync(password, 10);
+
+    try {
+      await User.create({
+        NICKNAME: nickname,
+        NAME: name,
+        LASTNAME: lastName,
+        HASHED_PASSWORD: hashed_password,
+        BIRTHDAY: new Date(birthday),
+        CPF: cpf,
+        EMAIL: email,
+        IS_ADMIN: true,
+      });
+      return true;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  },
+  async updateUser(nickname, name, lastName, password, birthday, cpf, email) {
+    try {
+      if (password) {
+        let hashed_password = bcrypt.hashSync(password, 10);
+        await User.update(
+          {
+            NAME: name,
+            LASTNAME: lastName,
+            HASHED_PASSWORD: hashed_password,
+            BIRTHDAY: new Date(birthday),
+            CPF: cpf,
+            EMAIL: email,
+            IS_ADMIN: true,
+          },
+          {
+            where: {
+              NICKNAME: {
+                [Op.eq]: nickname,
+              },
+            },
+          }
+        );
+      } else {
+        await User.update(
+          {
+            NAME: name,
+            LASTNAME: lastName,
+            BIRTHDAY: new Date(birthday),
+            CPF: cpf,
+            EMAIL: email,
+            IS_ADMIN: true,
+          },
+          {
+            where: {
+              NICKNAME: {
+                [Op.eq]: nickname,
+              },
+            },
+          }
+        );
+      }
+
+      return true;
+    } catch (error) {
+      console.log(error);
       return false;
     }
   },

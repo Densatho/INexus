@@ -27,10 +27,9 @@ const databaseConfig = {
     type: DataTypes.DATE,
     allowNull: false,
   },
-  HASHED_CPF: {
-    type: DataTypes.STRING(64),
+  CPF: {
+    type: DataTypes.TEXT,
     allowNull: false,
-    is: /^[0-9a-f]{64}$/i,
   },
   AVATAR_URL: {
     type: DataTypes.TEXT,
@@ -38,6 +37,10 @@ const databaseConfig = {
   EMAIL: {
     type: DataTypes.TEXT,
     allowNull: false,
+  },
+  IS_ADMIN: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
   },
 };
 
@@ -50,6 +53,9 @@ class User extends Model {
   }
   getNickname() {
     return this.NICKNAME;
+  }
+  getIsAdmin() {
+    return this.IS_ADMIN;
   }
 }
 User.init(databaseConfig, { sequelize, modelName: "USER" });

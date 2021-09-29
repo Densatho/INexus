@@ -1,12 +1,12 @@
 const userConn = require("./DBConnection/userConnection");
 
-nickname = "Densatho";
-name = "Dennis Santos";
-lastName = "Jacintho";
+nickname = "shollzz";
+name = "Lucas Henrique";
+lastName = "Azzi";
 password = "Teste";
-birthday = "11/10/2000";
+birthday = "8/1/2000";
 cpf = "012.345.678-90";
-email = "dsjacinthotre@gmail.com";
+email = "lucashazzi@gmail.com";
 
 async function teste() {
   const user = await userConn.createUser(
