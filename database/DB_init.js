@@ -8,7 +8,6 @@ const Bet = require("./models/bet");
 authenticate = async () => {
   try {
     await User.sync();
-
     await League.sync();
     await Team.sync();
 

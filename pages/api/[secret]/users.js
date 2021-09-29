@@ -18,7 +18,7 @@ function formatDateWithHour(date) {
 
 async function getAllUsers(req, res) {
   if (req.query.secret === process.env.API_SECRET) {
-    let users = await UserConn.getAllUsers();
+    let users = await UserConn.getAll();
     let usersList = [];
 
     users.forEach((user) => {

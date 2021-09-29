@@ -3,7 +3,7 @@ const User = require("../models/user");
 const bcrypt = require("bcryptjs");
 
 module.exports = {
-  async getAllUsers() {
+  async getAll() {
     try {
       let users = await User.findAll({
         attributes: [
@@ -81,7 +81,7 @@ module.exports = {
       return user[0];
     } catch (error) {}
   },
-  async createUser(nickname, name, lastName, password, birthday, cpf, email) {
+  async add(nickname, name, lastName, password, birthday, cpf, email) {
     let hashed_password = bcrypt.hashSync(password, 10);
 
     try {
@@ -100,7 +100,7 @@ module.exports = {
       return false;
     }
   },
-  async createAdmin(nickname, name, lastName, password, birthday, cpf, email) {
+  async addAdmin(nickname, name, lastName, password, birthday, cpf, email) {
     let hashed_password = bcrypt.hashSync(password, 10);
 
     try {
@@ -120,7 +120,7 @@ module.exports = {
       return false;
     }
   },
-  async updateUser(nickname, name, lastName, password, birthday, cpf, email) {
+  async update(nickname, name, lastName, password, birthday, cpf, email) {
     try {
       if (password) {
         let hashed_password = bcrypt.hashSync(password, 10);
@@ -161,6 +161,22 @@ module.exports = {
           }
         );
       }
+
+      return true;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  },
+  async delete(nickname) {
+    try {
+      await User.destroy({
+        where: {
+          NICKNAME: {
+            [Op.eq]: nickname,
+          },
+        },
+      });
 
       return true;
     } catch (error) {

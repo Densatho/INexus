@@ -21,7 +21,7 @@ async function getUserByNick(req, res) {
 
         let email = req.body.email ? req.body.email : user.dataValues.EMAIL;
 
-        const updatedUser = await UserConn.updateUser(
+        const updatedUser = await UserConn.update(
           nickname,
           name,
           lastName,
@@ -30,7 +30,9 @@ async function getUserByNick(req, res) {
           cpf,
           email
         );
-        console.log(updatedUser);
+        if (updatedUser) {
+          user = await UserConn.getUserByNickname(nickname);
+        }
       }
       res.json(user);
     } else {
