@@ -2,7 +2,7 @@ const UserConn = require("src/database/DBConnection/userConnection");
 import bcrypt from "bcryptjs";
 
 async function LoginApi(req, res) {
-  if (req.method === "PUT") {
+  if (req.method === "POST") {
     if (req.query.secret === process.env.API_SECRET) {
       let user = await UserConn.getUserByNicknameLogin(req.body.nickname);
       if (user !== undefined) {

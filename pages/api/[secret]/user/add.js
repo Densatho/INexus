@@ -2,7 +2,7 @@ const UserConn = require("src/database/DBConnection/userConnection");
 const bcrypt = require("bcryptjs");
 
 async function addUser(req, res) {
-  if (req.method === "PUT") {
+  if (req.method === "POST") {
     if (req.query.secret === process.env.API_SECRET) {
       let user = await UserConn.getUserByNickname(req.body.nickname);
       let hashed_password = bcrypt.hashSync(req.body.password, 10);
@@ -32,8 +32,8 @@ async function addUser(req, res) {
       });
     }
   } else {
-    res.status(500).json({
-      message: "Sorry, we only accept PUT requests",
+    res.status(405).json({
+      message: "Sorry, we only accept POST requests",
     });
   }
 }
