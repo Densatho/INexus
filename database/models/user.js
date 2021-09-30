@@ -45,12 +45,6 @@ const databaseConfig = {
 };
 
 class User extends Model {
-  login(password) {
-    if (bcrypt.compareSync(password, this.HASHED_PASSWORD)) {
-      return true;
-    }
-    return false;
-  }
   getNickname() {
     return this.NICKNAME;
   }

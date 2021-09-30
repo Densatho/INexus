@@ -1,5 +1,6 @@
 const UserConn = require("src/database/DBConnection/userConnection");
 const { formatDateWithHour, formatDate } = require("src/database/formatDate");
+import bcrypt from "bcryptjs";
 
 async function getUserByNick(req, res) {
   if (req.query.secret === process.env.API_SECRET) {
@@ -21,12 +22,15 @@ async function getUserByNick(req, res) {
         let cpf = req.body.cpf ? req.body.cpf : user.dataValues.CPF;
 
         let email = req.body.email ? req.body.email : user.dataValues.EMAIL;
+        let hashed_password = req.body.password
+          ? bcrypt.hashSync(req.body.password, 10)
+          : req.body.password;
 
         const updatedUser = await UserConn.update(
           nickname,
           name,
           lastName,
-          req.body.password,
+          hashed_password,
           birthday,
           cpf,
           email

@@ -1,6 +1,5 @@
 const { Op } = require("sequelize");
 const User = require("../models/user");
-const bcrypt = require("bcryptjs");
 
 module.exports = {
   async getAll() {
@@ -82,14 +81,12 @@ module.exports = {
     } catch (error) {}
   },
   async add(nickname, name, lastName, password, birthday, cpf, email) {
-    let hashed_password = bcrypt.hashSync(password, 10);
-
     try {
       await User.create({
         NICKNAME: nickname,
         NAME: name,
         LASTNAME: lastName,
-        HASHED_PASSWORD: hashed_password,
+        HASHED_PASSWORD: password,
         BIRTHDAY: new Date(birthday),
         CPF: cpf,
         EMAIL: email,
@@ -101,14 +98,12 @@ module.exports = {
     }
   },
   async addAdmin(nickname, name, lastName, password, birthday, cpf, email) {
-    let hashed_password = bcrypt.hashSync(password, 10);
-
     try {
       await User.create({
         NICKNAME: nickname,
         NAME: name,
         LASTNAME: lastName,
-        HASHED_PASSWORD: hashed_password,
+        HASHED_PASSWORD: password,
         BIRTHDAY: new Date(birthday),
         CPF: cpf,
         EMAIL: email,
@@ -123,12 +118,11 @@ module.exports = {
   async update(nickname, name, lastName, password, birthday, cpf, email) {
     try {
       if (password) {
-        let hashed_password = bcrypt.hashSync(password, 10);
         await User.update(
           {
             NAME: name,
             LASTNAME: lastName,
-            HASHED_PASSWORD: hashed_password,
+            HASHED_PASSWORD: password,
             BIRTHDAY: new Date(birthday),
             CPF: cpf,
             EMAIL: email,
