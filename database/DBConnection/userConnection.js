@@ -97,18 +97,40 @@ module.exports = {
       return false;
     }
   },
-  async addAdmin(nickname, name, lastName, password, birthday, cpf, email) {
+  async addAdmin(nickname) {
     try {
-      await User.create({
-        NICKNAME: nickname,
-        NAME: name,
-        LASTNAME: lastName,
-        HASHED_PASSWORD: password,
-        BIRTHDAY: new Date(birthday),
-        CPF: cpf,
-        EMAIL: email,
-        IS_ADMIN: true,
-      });
+      await User.update(
+        {
+          IS_ADMIN: true,
+        },
+        {
+          where: {
+            NICKNAME: {
+              [Op.eq]: nickname,
+            },
+          },
+        }
+      );
+      return true;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  },
+  async deleteAdmin(nickname) {
+    try {
+      await User.update(
+        {
+          IS_ADMIN: false,
+        },
+        {
+          where: {
+            NICKNAME: {
+              [Op.eq]: nickname,
+            },
+          },
+        }
+      );
       return true;
     } catch (error) {
       console.log(error);
@@ -126,7 +148,6 @@ module.exports = {
             BIRTHDAY: new Date(birthday),
             CPF: cpf,
             EMAIL: email,
-            IS_ADMIN: true,
           },
           {
             where: {
@@ -144,7 +165,6 @@ module.exports = {
             BIRTHDAY: new Date(birthday),
             CPF: cpf,
             EMAIL: email,
-            IS_ADMIN: true,
           },
           {
             where: {
@@ -157,6 +177,15 @@ module.exports = {
       }
 
       return true;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  },
+  async isAdmin(nickname) {
+    try {
+      let user = await this.getUserByNicknameLogin(nickname);
+      return user.dataValues.IS_ADMIN;
     } catch (error) {
       console.log(error);
       return false;
