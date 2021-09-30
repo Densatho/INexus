@@ -1,4 +1,5 @@
 const UserConn = require("src/database/DBConnection/userConnection");
+const { formatDateWithHour, formatDate } = require("src/database/formatDate");
 
 async function getUserByNick(req, res) {
   if (req.query.secret === process.env.API_SECRET) {
@@ -34,6 +35,9 @@ async function getUserByNick(req, res) {
           user = await UserConn.getUserByNickname(nickname);
         }
       }
+      user.dataValues.createdAt = formatDateWithHour(user.dataValues.createdAt);
+      user.dataValues.updatedAt = formatDateWithHour(user.dataValues.updatedAt);
+      user.dataValues.BIRTHDAY = formatDate(user.dataValues.BIRTHDAY);
       res.json(user);
     } else {
       res.status(500).json({

@@ -10,20 +10,9 @@ authenticate = async () => {
     await User.sync();
     await League.sync();
     await Team.sync();
-
-    Games.belongsTo(League);
-    Games.belongsTo(Team, {
-      as: "TEAM_1_",
-    });
-    Games.belongsTo(Team, {
-      as: "TEAM_2_",
-    });
     await Games.sync();
-
-    Bet.belongsTo(User);
-    Bet.belongsTo(Games);
-
     await Bet.sync();
+
     console.log("Database initialized");
   } catch (error) {
     console.log("Unable to connect to the database.", error);

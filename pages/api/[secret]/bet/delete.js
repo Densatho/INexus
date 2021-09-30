@@ -1,18 +1,21 @@
-const LeagueConn = require("src/database/DBConnection/leagueConnection");
+const betConn = require("src/database/DBConnection/betConnection");
 
-async function deleteLeague(req, res) {
+async function deleteBet(req, res) {
   if (req.method === "PUT") {
     if (req.query.secret === process.env.API_SECRET) {
-      let league = await LeagueConn.getLeagueByName(req.body.leagueName);
-      if (league !== undefined) {
-        let isDeleted = await LeagueConn.delete(league.dataValues.LEAGUE_NAME);
+      let bet = await betConn.getBetByUserAndGame(
+        req.body.nickname,
+        req.body.gameId
+      );
+      if (bet !== undefined) {
+        let isDeleted = await betConn.delete(bet.dataValues.id);
         let resp = {
           isDeleted: isDeleted,
         };
         res.json(resp);
       } else {
         res.status(500).json({
-          message: "This league name doesn't exists",
+          message: "This bet doesn't exists",
         });
       }
     } else {
@@ -27,4 +30,4 @@ async function deleteLeague(req, res) {
   }
 }
 
-export default deleteLeague;
+export default deleteBet;

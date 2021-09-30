@@ -1,20 +1,5 @@
 const UserConn = require("src/database/DBConnection/userConnection");
-
-function formatDate(date) {
-  date = new Date(date);
-  let formatedDate = `${date.getDate()}/${
-    date.getMonth() + 1
-  }/${date.getFullYear()}`;
-  return formatedDate;
-}
-
-function formatDateWithHour(date) {
-  date = new Date(date);
-  let formatedDate = `${date.getDate()}/${
-    date.getMonth() + 1
-  }/${date.getFullYear()}:${date.getHours()} hour(s) and ${date.getMinutes()} minute(s)`;
-  return formatedDate;
-}
+const { formatDate, formatDateWithHour } = require("src/database/formatDate");
 
 async function getAllAdmins(req, res) {
   if (req.query.secret === process.env.API_SECRET) {

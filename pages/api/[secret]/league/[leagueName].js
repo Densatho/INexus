@@ -1,4 +1,5 @@
 const leagueConn = require("src/database/DBConnection/leagueConnection");
+const { formatDateWithHour } = require("src/database/formatDate");
 
 async function getLeagueByName(req, res) {
   if (req.query.secret === process.env.API_SECRET) {
@@ -18,6 +19,12 @@ async function getLeagueByName(req, res) {
           );
         }
       }
+      league.dataValues.createdAt = formatDateWithHour(
+        league.dataValues.createdAt
+      );
+      league.dataValues.updatedAt = formatDateWithHour(
+        league.dataValues.updatedAt
+      );
       res.json(league);
     } else {
       res.status(500).json({

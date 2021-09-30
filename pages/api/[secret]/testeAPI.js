@@ -2,14 +2,15 @@ const UserConn = require("src/database/DBConnection/userConnection");
 
 async function LoginApi(req, res) {
   if (req.query.secret === process.env.API_SECRET) {
-    const url = process.env.API_URL + process.env.API_SECRET + "/team/incLosse";
+    const url =
+      process.env.API_URL + process.env.API_SECRET + "/bet/Densatho/1";
     let testeResp = await fetch(url, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        teamName: "pain gaming",
+        gain: true,
       }),
     });
     res.json(await testeResp.json());
