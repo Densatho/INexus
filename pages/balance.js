@@ -1,4 +1,4 @@
-export default function Navbar() {
+export default function Balance() {
   return (
     <>
       <p>balance</p>

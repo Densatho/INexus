@@ -1,6 +1,6 @@
 const { Container } = require("@chakra-ui/layout");
 
-export default function Navbar() {
+export default function UserLogin() {
   return (
     <>
       <Container
