@@ -12,7 +12,6 @@ export default function Layout(props) {
         <meta name="Nexus" content="Bet for League of Legends games" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Navbar />
       <Flex flexDirection="column" pt={14}>
         {props.children}
       </Flex>
