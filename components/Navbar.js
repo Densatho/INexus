@@ -25,20 +25,22 @@ function Navbar(props) {
             </Link>
           </Flex>
           <Divider orientation="vertical" ml="2" mr="2" />
-          <Menu>
-            <MenuButton
-              as={Avatar}
-              mr={6}
-              name={username}
-              src="/images/avatar.png"
-              size="sm"
-            />
-            <MenuList>
-              <MenuItem>Perfil</MenuItem>
-              <MenuItem>Perfil</MenuItem>
-              <MenuItem>Perfil</MenuItem>
-            </MenuList>
-          </Menu>
+          <Flex bg="charcoal.50">
+            <Menu>
+              <MenuButton
+                as={Avatar}
+                mr={6}
+                name={username}
+                src="/images/avatar.png"
+                size="sm"
+              />
+              <MenuList _focus={{ bg: "charcoal.400" }}>
+                <MenuItem>{username}</MenuItem>
+                <MenuItem>Perfil</MenuItem>
+                <MenuItem>Perfil</MenuItem>
+              </MenuList>
+            </Menu>
+          </Flex>
         </>
       ) : (
         <Flex>
