@@ -5,7 +5,7 @@ import { Spacer, Divider } from "@chakra-ui/layout";
 import React from "react";
 
 let saldo = 1995.97;
-export default function Navbar() {
+export default function Navbar(props) {
   return (
     <>
       <Flex p="2" bg="#3B3B3B" w="100%" p={4} h="14" color="white">
