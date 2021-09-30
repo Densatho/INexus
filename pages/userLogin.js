@@ -1,23 +1,42 @@
 import { Button } from "@chakra-ui/button";
-import {
-  FormControl,
-  FormHelperText,
-  FormLabel,
-} from "@chakra-ui/form-control";
+import { FormControl, FormLabel } from "@chakra-ui/form-control";
 import { Input, InputGroup, InputRightElement } from "@chakra-ui/input";
 import { useState } from "react";
+import { Box, Container, Flex, Spacer, Stack } from "@chakra-ui/layout";
+import Link from "next/link";
+import { useRef } from "react";
+import router from "next/router";
 
-const { Container, Box, Stack } = require("@chakra-ui/layout");
-
-export function getStaticProps({ nickname }) {
-  console.log(nickname);
-  return { props: {} };
-}
-
-export default function UserLogin(props) {
+function UserLogin(props) {
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
-  const handleSubmit = () => {};
+  const nicknameRef = useRef(null);
+  const passRef = useRef(null);
+
+  async function handleLogin() {
+    let resp = await fetch("/api/user/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        nickname: nicknameRef.current?.value,
+        password: passRef.current?.value,
+      }),
+    });
+    const json = await resp.json();
+    console.log(json);
+    if (json.message === "Welcome back to the app!") {
+      document.cookie = `nickname=${nicknameRef.current?.value}; expires=Session; secure=true; sameSite=Strict; path=/`;
+      router.push("/");
+    }
+  }
+
+  if (process.browser) {
+    if (document.cookie) {
+      return <>Você já esta autenticado</>;
+    }
+  }
 
   return (
     <>
@@ -34,13 +53,14 @@ export default function UserLogin(props) {
       >
         Faça o seu Login:
         <Stack spacing={6} margin={4}>
-          <form action="/userLogin" method="post" id="loginForm">
+          <form action="/userLogin" id="loginForm">
             <FormControl>
               <FormLabel>Nome de usuário</FormLabel>
               <Input
                 placeholder="Username"
                 name="nickname"
                 id="loginNickname"
+                ref={nicknameRef}
               />
               <FormLabel marginTop={2}>Senha</FormLabel>
               <InputGroup>
@@ -49,6 +69,7 @@ export default function UserLogin(props) {
                   id="loginPassword"
                   placeholder="Senha"
                   type={show ? "text" : "password"}
+                  ref={passRef}
                 />
                 <InputRightElement>
                   <Button
@@ -61,14 +82,23 @@ export default function UserLogin(props) {
                   </Button>
                 </InputRightElement>
               </InputGroup>
-              <Button
-                colorScheme="teal"
-                marginTop={4}
-                datainput="loginForm"
-                type="submit"
-              >
-                Logar
-              </Button>
+              <Flex marginTop={4}>
+                <Box marginTop={1}>
+                  <Link href="/userSignup">
+                    <a>Criar conta</a>
+                  </Link>
+                </Box>
+                <Spacer />
+                <Box marginRight="0">
+                  <Button
+                    colorScheme="teal"
+                    datainput="loginForm"
+                    onClick={handleLogin}
+                  >
+                    Logar
+                  </Button>
+                </Box>
+              </Flex>
             </FormControl>
           </form>
         </Stack>
@@ -77,3 +107,5 @@ export default function UserLogin(props) {
     </>
   );
 }
+
+export default UserLogin;
