@@ -1,4 +1,11 @@
-import { Flex } from "@chakra-ui/react";
+import {
+  Flex,
+  Menu,
+  MenuButton,
+  Avatar,
+  MenuList,
+  MenuItem,
+} from "@chakra-ui/react";
 import Link from "next/link";
 import Image from "next/image";
 import { Spacer, Divider } from "@chakra-ui/layout";
@@ -9,8 +16,8 @@ let saldo = 1995.97;
 function Navbar(props) {
   function isUser() {
     if (process.browser) {
-      console.log(process.cookie);
-      return document.cookie?.split("=")[1] ? (
+      let username = document.cookie?.split("=")[1];
+      return username ? (
         <>
           <Flex>
             <Link href="/balance">
@@ -18,6 +25,20 @@ function Navbar(props) {
             </Link>
           </Flex>
           <Divider orientation="vertical" ml="2" mr="2" />
+          <Menu>
+            <MenuButton
+              as={Avatar}
+              mr={6}
+              name={username}
+              src="/images/avatar.png"
+              size="sm"
+            />
+            <MenuList>
+              <MenuItem>Perfil</MenuItem>
+              <MenuItem>Perfil</MenuItem>
+              <MenuItem>Perfil</MenuItem>
+            </MenuList>
+          </Menu>
         </>
       ) : (
         <Flex>
