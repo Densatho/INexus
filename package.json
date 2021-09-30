@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "dev": "node ./database/DB_init.js && next dev",
+    "build": "node ./database/DB_init.js && next build",
     "start": "next start",
     "lint": "next lint"
   },
@@ -15,12 +15,12 @@
     "bcryptjs": "^2.4.3",
     "framer-motion": "^4.1.17",
     "js-cookie": "^3.0.1",
+    "jsonwebtoken": "^8.5.1",
     "next": "11.1.2",
     "next-connect": "^0.10.2",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "sequelize": "^6.6.5",
-    "sequelize-cli": "^6.2.0",
     "sharp": "^0.29.1",
     "sqlite3": "^5.0.2"
   },
