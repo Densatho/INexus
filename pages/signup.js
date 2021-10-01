@@ -65,6 +65,12 @@ function UserSignUp(props) {
     router.push("/login");
   }
 
+  if (process.browser) {
+    let cookies = document.cookie?.split(/[\s,=;]+/);
+    if (cookies.includes("nickname")) {
+      return <>Você já esta autenticado</>;
+    }
+  }
   return (
     <>
       <Container

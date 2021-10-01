@@ -6,6 +6,7 @@ import { Box, Container, Flex, Spacer, Stack } from "@chakra-ui/layout";
 import Link from "next/link";
 import { useRef } from "react";
 import router from "next/router";
+import { border } from "@chakra-ui/styled-system";
 
 function UserLogin(props) {
   const [show, setShow] = useState(false);
@@ -49,16 +50,19 @@ function UserLogin(props) {
         alignSelf="center"
         w="450px"
         h="450px"
-        bgColor="#757575"
+        bgColor="#3B3B3B"
         textAlign="center"
         p="2.5"
         mt="10"
         shadow="1px 1px rgba(0,0,0,0.4)"
         color="white"
+        borderRadius="2xl"
       >
-        Faça o seu Login:
+        <Box fontWeight="bold" fontSize="18px">
+          Login
+        </Box>
         <Stack spacing={6} margin={4}>
-          <form action="/userLogin" id="loginForm">
+          <form action="/login" id="loginForm">
             <FormControl>
               <FormLabel>Nome de usuário</FormLabel>
               <Input
@@ -80,8 +84,10 @@ function UserLogin(props) {
                   <Button
                     bgColor="rgba(0,0,0,0)"
                     onClick={handleClick}
-                    h={8}
-                    size="sm"
+                    h={6}
+                    bw={6}
+                    size="md"
+                    mr="4vh"
                   >
                     {show ? "Hide" : "Show"}
                   </Button>

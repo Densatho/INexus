@@ -15,6 +15,7 @@ import React from "react";
 import router from "next/router";
 
 let saldo = 1995.97;
+
 function Navbar(props) {
   const logout = async () => {
     let cookies = document.cookie?.split(/[\s,=;]+/);
@@ -84,11 +85,9 @@ function Navbar(props) {
                   <></>
                 )}
               </MenuGroup>
-              <MenuList onClick={logout} _focus={{ bg: "#878787" }}>
+              <MenuItem onClick={logout} _focus={{ bg: "#878787" }}>
                 Logout
-              </MenuList>
-              <MenuDivider />
-              <MenuItem _focus={{ bg: "#878787" }}>Perfil</MenuItem>
+              </MenuItem>
             </MenuList>
           </Menu>
         </>
