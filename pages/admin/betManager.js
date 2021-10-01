@@ -18,7 +18,7 @@ function betManager({ jwt_resp, bets }) {
     );
   }
 
-  if (!bets) {
+  if (!bets[0]) {
     return (
       <Flex>
         <Sidebar />

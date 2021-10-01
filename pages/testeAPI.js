@@ -3,7 +3,7 @@ import { Box, Button } from "@chakra-ui/react";
 function TesteApi(props) {
   let testeResp;
   async function testeApi() {
-    const url = "/api/user/delete";
+    const url = "/api/bet/add";
 
     // req.body.odd,
     // req.body.value,
@@ -11,16 +11,20 @@ function TesteApi(props) {
     // req.body.gameId,
     // req.body.teamName
 
-    // let testeResp = await fetch(url, {
-    //   method: "PUT",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify({
-    //     nickname: "Densatho",
-    //   }),
-    // });
-    // console.log(await testeResp.json());
+    let testeResp = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        nickname: "Densatho",
+        odd: 1.6,
+        value: 1000,
+        gameId: 1,
+        teamName: "pain gaming",
+      }),
+    });
+    console.log(await testeResp.json());
   }
 
   return (

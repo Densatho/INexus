@@ -18,7 +18,7 @@ function userManager({ jwt_resp, users }) {
     );
   }
 
-  if (!users) {
+  if (!users[0]) {
     return (
       <Flex>
         <Sidebar />
