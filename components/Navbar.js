@@ -94,7 +94,7 @@ function Navbar(props) {
         </>
       ) : (
         <Flex>
-          <Link href="/userLogin">
+          <Link href="/login">
             <a>Login</a>
           </Link>
         </Flex>

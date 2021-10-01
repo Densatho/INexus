@@ -84,7 +84,7 @@ function UserLogin(props) {
               </InputGroup>
               <Flex marginTop={4}>
                 <Box marginTop={1}>
-                  <Link href="/userSignup">
+                  <Link href="/signup">
                     <a>Criar conta</a>
                   </Link>
                 </Box>
