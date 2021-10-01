@@ -1,6 +1,6 @@
 const betConn = require("src/database/DBConnection/betConnection");
 const { formatDateWithHour } = require("src/database/formatDate");
-import { admin_authenticated } from "src/components/authenticated";
+import { both_authenticated } from "src/components/authenticated";
 
 async function getAllBets(req, res) {
   let bets = await betConn.getAll();
@@ -15,4 +15,4 @@ async function getAllBets(req, res) {
   res.json(betList);
 }
 
-export default admin_authenticated(getAllBets);
+export default both_authenticated(getAllBets);

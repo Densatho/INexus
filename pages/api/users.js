@@ -1,6 +1,6 @@
 const UserConn = require("src/database/DBConnection/userConnection");
 const { formatDate, formatDateWithHour } = require("src/database/formatDate");
-import { both_authenticated } from "src/components/authenticated";
+import { admin_authenticated } from "src/components/authenticated";
 
 async function getAllUsers(req, res) {
   let users = await UserConn.getAll();
@@ -16,4 +16,4 @@ async function getAllUsers(req, res) {
   res.json(usersList);
 }
 
-export default both_authenticated(getAllUsers);
+export default admin_authenticated(getAllUsers);
