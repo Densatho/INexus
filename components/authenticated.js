@@ -14,7 +14,6 @@ export const notAuthenticated = (fn) => async (req, res) => {
 };
 
 export const authenticated = (fn) => async (req, res) => {
-  console.log(req.cookies);
   verify(
     req.cookies.auth,
     process.env.JWT_SECRET,
@@ -28,8 +27,9 @@ export const authenticated = (fn) => async (req, res) => {
 };
 
 export const admin_authenticated = (fn) => async (req, res) => {
+  const { cookies } = req;
   verify(
-    req.cookies.auth,
+    cookies.auth,
     process.env.JWT_ADMIN_SECRET,
     async function (err, decoded) {
       if (!err && decoded) {
