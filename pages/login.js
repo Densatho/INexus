@@ -1,4 +1,5 @@
 import { Button } from "@chakra-ui/button";
+import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { FormControl, FormLabel } from "@chakra-ui/form-control";
 import { Input, InputGroup, InputRightElement } from "@chakra-ui/input";
 import { useState } from "react";
@@ -48,8 +49,8 @@ function UserLogin(props) {
     <>
       <Container
         alignSelf="center"
-        w="450px"
-        h="450px"
+        w="350px"
+        h="350px"
         bgColor="#3B3B3B"
         textAlign="center"
         p="2.5"
@@ -66,7 +67,7 @@ function UserLogin(props) {
             <FormControl>
               <FormLabel>Nome de usuário</FormLabel>
               <Input
-                placeholder="Username"
+                placeholder="Usuário"
                 name="nickname"
                 id="loginNickname"
                 ref={nicknameRef}
@@ -82,6 +83,7 @@ function UserLogin(props) {
                 />
                 <InputRightElement>
                   <Button
+                    colorScheme="teal"
                     bgColor="rgba(0,0,0,0)"
                     onClick={handleClick}
                     h={6}
@@ -89,7 +91,7 @@ function UserLogin(props) {
                     size="md"
                     mr="4vh"
                   >
-                    {show ? "Hide" : "Show"}
+                    {show ? <ViewOffIcon /> : <ViewIcon />}
                   </Button>
                 </InputRightElement>
               </InputGroup>
