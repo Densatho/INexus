@@ -42,6 +42,10 @@ const databaseConfig = {
     type: DataTypes.BOOLEAN,
     defaultValue: false,
   },
+  BALANCE: {
+    type: DataTypes.FLOAT,
+    defaultValue: 0,
+  },
 };
 
 class User extends Model {

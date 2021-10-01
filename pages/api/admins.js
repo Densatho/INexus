@@ -1,24 +1,19 @@
 const UserConn = require("src/database/DBConnection/userConnection");
 const { formatDate, formatDateWithHour } = require("src/database/formatDate");
+import { admin_authenticated } from "src/components/authenticated";
 
 async function getAllAdmins(req, res) {
-  if (req.query.secret === process.env.API_SECRET) {
-    let users = await UserConn.getAllAdmins();
-    let usersList = [];
+  let users = await UserConn.getAllAdmins();
+  let usersList = [];
 
-    users.forEach((user) => {
-      user.dataValues.BIRTHDAY = formatDate(user.dataValues.BIRTHDAY);
-      user.dataValues.createdAt = formatDateWithHour(user.dataValues.createdAt);
-      user.dataValues.updatedAt = formatDateWithHour(user.dataValues.updatedAt);
-      usersList.push(user.dataValues);
-    });
+  users.forEach((user) => {
+    user.dataValues.BIRTHDAY = formatDate(user.dataValues.BIRTHDAY);
+    user.dataValues.createdAt = formatDateWithHour(user.dataValues.createdAt);
+    user.dataValues.updatedAt = formatDateWithHour(user.dataValues.updatedAt);
+    usersList.push(user.dataValues);
+  });
 
-    res.json(usersList);
-  } else {
-    res.status(500).json({
-      message: "Sorry, your secret is invalid",
-    });
-  }
+  res.json(usersList);
 }
 
-export default getAllAdmins;
+export default admin_authenticated(getAllAdmins);

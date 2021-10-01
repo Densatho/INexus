@@ -45,6 +45,7 @@ async function LoginApi(req, res) {
         res.json({
           message: "Welcome back to the app!",
           isAdmin: user.IS_ADMIN,
+          balance: user.BALANCE,
         });
       } else {
         res.status(500).json({

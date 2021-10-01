@@ -1,23 +1,18 @@
 const UserConn = require("src/database/DBConnection/userConnection");
+import { both_authenticated } from "src/components/authenticated";
 
 async function deleteUser(req, res) {
   if (req.method === "PUT") {
-    if (req.query.secret === process.env.API_SECRET) {
-      let user = await UserConn.getUserByNickname(req.body.nickname);
-      if (user !== undefined) {
-        let isDeleted = await UserConn.delete(user.dataValues.NICKNAME);
-        let resp = {
-          isDeleted: isDeleted,
-        };
-        res.json(resp);
-      } else {
-        res.status(500).json({
-          message: "This nickname doesn't exists",
-        });
-      }
+    let user = await UserConn.getUserByNickname(req.body.nickname);
+    if (user !== undefined) {
+      let isDeleted = await UserConn.delete(user.dataValues.NICKNAME);
+      let resp = {
+        isDeleted: isDeleted,
+      };
+      res.json(resp);
     } else {
       res.status(500).json({
-        message: "Sorry, your secret is invalid",
+        message: "This nickname doesn't exists",
       });
     }
   } else {
@@ -27,4 +22,4 @@ async function deleteUser(req, res) {
   }
 }
 
-export default deleteUser;
+export default both_authenticated(deleteUser);

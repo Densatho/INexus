@@ -1,31 +1,26 @@
 const UserConn = require("src/database/DBConnection/userConnection");
+import { admin_authenticated } from "src/components/authenticated";
 
 async function delAdmin(req, res) {
   if (req.method === "PUT") {
-    if (req.query.secret === process.env.API_SECRET) {
-      let nickname = req.body.nickname;
-      let user = await UserConn.getUserByNickname(nickname);
+    let nickname = req.body.nickname;
+    let user = await UserConn.getUserByNickname(nickname);
 
-      if (user !== undefined) {
-        if (await UserConn.isAdmin(nickname)) {
-          let isDelete = await UserConn.deleteAdmin(nickname);
-          let resp = {
-            isDelete: isDelete,
-          };
-          res.json(resp);
-        } else {
-          res.status(500).json({
-            message: "This account isn't an admin",
-          });
-        }
+    if (user !== undefined) {
+      if (await UserConn.isAdmin(nickname)) {
+        let isDelete = await UserConn.deleteAdmin(nickname);
+        let resp = {
+          isDelete: isDelete,
+        };
+        res.json(resp);
       } else {
         res.status(500).json({
-          message: "This nickname doesn't exists",
+          message: "This account isn't an admin",
         });
       }
     } else {
       res.status(500).json({
-        message: "Sorry, your secret is invalid",
+        message: "This nickname doesn't exists",
       });
     }
   } else {
@@ -35,4 +30,4 @@ async function delAdmin(req, res) {
   }
 }
 
-export default delAdmin;
+export default admin_authenticated(delAdmin);

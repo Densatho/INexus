@@ -1,23 +1,18 @@
 const LeagueConn = require("src/database/DBConnection/leagueConnection");
+import { admin_authenticated } from "src/components/authenticated";
 
 async function deleteLeague(req, res) {
   if (req.method === "PUT") {
-    if (req.query.secret === process.env.API_SECRET) {
-      let league = await LeagueConn.getLeagueByName(req.body.leagueName);
-      if (league !== undefined) {
-        let isDeleted = await LeagueConn.delete(league.dataValues.LEAGUE_NAME);
-        let resp = {
-          isDeleted: isDeleted,
-        };
-        res.json(resp);
-      } else {
-        res.status(500).json({
-          message: "This league name doesn't exists",
-        });
-      }
+    let league = await LeagueConn.getLeagueByName(req.body.leagueName);
+    if (league !== undefined) {
+      let isDeleted = await LeagueConn.delete(league.dataValues.LEAGUE_NAME);
+      let resp = {
+        isDeleted: isDeleted,
+      };
+      res.json(resp);
     } else {
       res.status(500).json({
-        message: "Sorry, your secret is invalid",
+        message: "This league name doesn't exists",
       });
     }
   } else {
@@ -27,4 +22,4 @@ async function deleteLeague(req, res) {
   }
 }
 
-export default deleteLeague;
+export default admin_authenticated(deleteLeague);

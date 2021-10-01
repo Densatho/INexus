@@ -1,23 +1,18 @@
 const betConn = require("src/database/DBConnection/betConnection");
 const { formatDateWithHour } = require("src/database/formatDate");
+import { admin_authenticated } from "src/components/authenticated";
 
 async function getAllBets(req, res) {
-  if (req.query.secret === process.env.API_SECRET) {
-    let bets = await betConn.getAll();
-    let betList = [];
+  let bets = await betConn.getAll();
+  let betList = [];
 
-    bets.forEach((bet) => {
-      bet.dataValues.createdAt = formatDateWithHour(bet.dataValues.createdAt);
-      bet.dataValues.updatedAt = formatDateWithHour(bet.dataValues.updatedAt);
-      betList.push(bet.dataValues);
-    });
+  bets.forEach((bet) => {
+    bet.dataValues.createdAt = formatDateWithHour(bet.dataValues.createdAt);
+    bet.dataValues.updatedAt = formatDateWithHour(bet.dataValues.updatedAt);
+    betList.push(bet.dataValues);
+  });
 
-    res.json(betList);
-  } else {
-    res.status(500).json({
-      message: "Sorry, your secret is invalid",
-    });
-  }
+  res.json(betList);
 }
 
-export default getAllBets;
+export default admin_authenticated(getAllBets);

@@ -39,3 +39,17 @@ export const admin_authenticated = (fn) => async (req, res) => {
     }
   );
 };
+
+export const both_authenticated = (fn) => async (req, res) => {
+  try {
+    var decoded = verify(req.cookies.auth, process.env.JWT_SECRET);
+    return await fn(req, res);
+  } catch (error) {
+    try {
+      var decoded = verify(req.cookies.auth, process.env.JWT_ADMIN_SECRET);
+      return await fn(req, res);
+    } catch (error) {
+      res.status(500).json({ message: "Sorry, you are not authenticated" });
+    }
+  }
+};

@@ -7,6 +7,7 @@ module.exports = {
       let users = await User.findAll({
         attributes: [
           "NICKNAME",
+          "BALANCE",
           "NAME",
           "LASTNAME",
           "CPF",
@@ -25,6 +26,7 @@ module.exports = {
       let admin = await User.findAll({
         attributes: [
           "NICKNAME",
+          "BALANCE",
           "NAME",
           "LASTNAME",
           "CPF",
@@ -62,6 +64,7 @@ module.exports = {
       user = await User.findAll({
         attributes: [
           "NICKNAME",
+          "BALANCE",
           "NAME",
           "LASTNAME",
           "CPF",
@@ -137,7 +140,16 @@ module.exports = {
       return false;
     }
   },
-  async update(nickname, name, lastName, password, birthday, cpf, email) {
+  async update(
+    nickname,
+    name,
+    lastName,
+    password,
+    birthday,
+    cpf,
+    email,
+    balance
+  ) {
     try {
       if (password) {
         await User.update(
@@ -148,6 +160,7 @@ module.exports = {
             BIRTHDAY: new Date(birthday),
             CPF: cpf,
             EMAIL: email,
+            BALANCE: balance,
           },
           {
             where: {
@@ -165,6 +178,7 @@ module.exports = {
             BIRTHDAY: new Date(birthday),
             CPF: cpf,
             EMAIL: email,
+            BALANCE: balance,
           },
           {
             where: {

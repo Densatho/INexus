@@ -6,7 +6,6 @@ import {
   MenuList,
   MenuItem,
   MenuGroup,
-  MenuDivider,
 } from "@chakra-ui/react";
 import Link from "next/link";
 import Image from "next/image";
@@ -17,15 +16,28 @@ import router from "next/router";
 let saldo = 1995.97;
 
 function Navbar(props) {
+  let saldo = "";
+  let cookies;
+  if (process.browser) {
+    cookies = document.cookie?.split(/[\s,=;]+/);
+    if (cookies.includes("balance")) {
+      saldo = cookies[cookies.indexOf("balance") + 1];
+    }
+  }
+
   const logout = async () => {
-    let cookies = document.cookie?.split(/[\s,=;]+/);
     console.log(cookies);
-    if (cookies.includes("nickname")) {
-      document.cookie = "nickname=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
-    }
-    if (cookies.includes("isAdmin")) {
-      document.cookie = "isAdmin=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
-    }
+    const clearCookies = async () => {
+      if (cookies.includes("nickname")) {
+        document.cookie = "nickname=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+      }
+      if (cookies.includes("isAdmin")) {
+        document.cookie = "isAdmin=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+      }
+      if (cookies.includes("balance")) {
+        document.cookie = "balance=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+      }
+    };
 
     await fetch("/api/user/logout", {
       method: "POST",
@@ -36,15 +48,13 @@ function Navbar(props) {
         confirm: true,
       }),
     });
+    await clearCookies();
 
-    router.push("/");
+    window.location.href = "/";
   };
 
   function isUser() {
     if (process.browser) {
-      console.log(document.cookie);
-      let cookies = document.cookie?.split(/[\s,=;]+/);
-      console.log(cookies);
       let username;
       let admin;
       if (cookies.includes("nickname")) {
@@ -60,7 +70,7 @@ function Navbar(props) {
         <>
           <Flex>
             <Link href="/balance">
-              <a>${saldo}</a>
+              <a>R${saldo}</a>
             </Link>
           </Flex>
           <Divider orientation="vertical" ml="2" mr="2" />

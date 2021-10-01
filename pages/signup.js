@@ -56,6 +56,7 @@ function UserSignUp(props) {
         name: name,
         lastName: lastname,
         cpf: cpf,
+        birthday: date,
         password: hashed_pass,
       }),
     });

@@ -1,23 +1,18 @@
 const TeamConn = require("src/database/DBConnection/teamConnection");
+import { admin_authenticated } from "src/components/authenticated";
 
 async function deleteTeam(req, res) {
   if (req.method === "PUT") {
-    if (req.query.secret === process.env.API_SECRET) {
-      let team = await TeamConn.getTeamByName(req.body.teamName);
-      if (team !== undefined) {
-        let isDeleted = await TeamConn.delete(team.dataValues.TEAM_NAME);
-        let resp = {
-          isDeleted: isDeleted,
-        };
-        res.json(resp);
-      } else {
-        res.status(500).json({
-          message: "This team name doesn't exists",
-        });
-      }
+    let team = await TeamConn.getTeamByName(req.body.teamName);
+    if (team !== undefined) {
+      let isDeleted = await TeamConn.delete(team.dataValues.TEAM_NAME);
+      let resp = {
+        isDeleted: isDeleted,
+      };
+      res.json(resp);
     } else {
       res.status(500).json({
-        message: "Sorry, your secret is invalid",
+        message: "This team name doesn't exists",
       });
     }
   } else {
@@ -27,4 +22,4 @@ async function deleteTeam(req, res) {
   }
 }
 
-export default deleteTeam;
+export default admin_authenticated(deleteTeam);

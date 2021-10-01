@@ -1,39 +1,34 @@
 const betConn = require("src/database/DBConnection/betConnection");
+import { both_authenticated } from "src/components/authenticated";
 
 async function addBet(req, res) {
-  if (req.method === "PUT") {
-    if (req.query.secret === process.env.API_SECRET) {
-      let bet = await betConn.getBetByUserAndGame(
+  if (req.method === "POST") {
+    let bet = await betConn.getBetByUserAndGame(
+      req.body.nickname,
+      req.body.gameId
+    );
+    if (bet === undefined) {
+      let isCreated = await betConn.add(
+        req.body.odd,
+        req.body.value,
         req.body.nickname,
-        req.body.gameId
+        req.body.gameId,
+        req.body.teamName
       );
-      if (bet === undefined) {
-        let isCreated = await betConn.add(
-          req.body.odd,
-          req.body.value,
-          req.body.nickname,
-          req.body.gameId,
-          req.body.teamName
-        );
-        let resp = {
-          isCreated: isCreated,
-        };
-        res.json(resp);
-      } else {
-        res.status(500).json({
-          message: "This bet already exists",
-        });
-      }
+      let resp = {
+        isCreated: isCreated,
+      };
+      res.json(resp);
     } else {
       res.status(500).json({
-        message: "Sorry, your secret is invalid",
+        message: "This bet already exists",
       });
     }
   } else {
     res.status(500).json({
-      message: "Sorry, we only accept PUT requests",
+      message: "Sorry, we only accept POST requests",
     });
   }
 }
 
-export default addBet;
+export default both_authenticated(addBet);

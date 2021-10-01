@@ -1,25 +1,20 @@
 const TeamConn = require("src/database/DBConnection/teamConnection");
+import { admin_authenticated } from "src/components/authenticated";
 
 async function incrimentWin(req, res) {
   if (req.method === "PUT") {
-    if (req.query.secret === process.env.API_SECRET) {
-      let team = await TeamConn.getTeamByName(req.body.teamName);
-      if (team !== undefined) {
-        let isIncrimented = await TeamConn.incrimentWin(
-          team.dataValues.TEAM_NAME
-        );
-        let resp = {
-          isIncrimented: isIncrimented,
-        };
-        res.json(resp);
-      } else {
-        res.status(500).json({
-          message: "This team name doesn't exists",
-        });
-      }
+    let team = await TeamConn.getTeamByName(req.body.teamName);
+    if (team !== undefined) {
+      let isIncrimented = await TeamConn.incrimentWin(
+        team.dataValues.TEAM_NAME
+      );
+      let resp = {
+        isIncrimented: isIncrimented,
+      };
+      res.json(resp);
     } else {
       res.status(500).json({
-        message: "Sorry, your secret is invalid",
+        message: "This team name doesn't exists",
       });
     }
   } else {
@@ -29,4 +24,4 @@ async function incrimentWin(req, res) {
   }
 }
 
-export default incrimentWin;
+export default admin_authenticated(incrimentWin);
