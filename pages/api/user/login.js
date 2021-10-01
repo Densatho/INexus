@@ -42,7 +42,10 @@ async function LoginApi(req, res) {
           path: "/",
         });
 
-        res.json({ message: "Welcome back to the app!" });
+        res.json({
+          message: "Welcome back to the app!",
+          isAdmin: user.IS_ADMIN,
+        });
       } else {
         res.status(500).json({
           message: "Password invalid",
