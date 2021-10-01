@@ -13,6 +13,7 @@ import React from "react";
 import cookie from "cookie";
 
 let saldo = 1995.97;
+
 function Navbar(props) {
   function isUser() {
     if (process.browser) {
@@ -34,17 +35,19 @@ function Navbar(props) {
                 src="/images/avatar.png"
                 size="sm"
               />
-              <MenuList _focus={{ bg: "charcoal.400" }}>
-                <MenuItem>{username}</MenuItem>
-                <MenuItem>Perfil</MenuItem>
-                <MenuItem>Perfil</MenuItem>
+              <MenuList bg="#616161">
+                <Link href="/about">
+                  <MenuItem _focus={{ bg: "#878787" }}>{username}</MenuItem>
+                </Link>
+                <MenuItem _focus={{ bg: "#878787" }}>Perfil</MenuItem>
+                <MenuItem _focus={{ bg: "#878787" }}>Perfil</MenuItem>
               </MenuList>
             </Menu>
           </Flex>
         </>
       ) : (
         <Flex>
-          <Link href="/userLogin">
+          <Link href="/login">
             <a>Login</a>
           </Link>
         </Flex>
