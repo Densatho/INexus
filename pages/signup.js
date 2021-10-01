@@ -62,7 +62,7 @@ function UserSignUp(props) {
     const json = await resp.json();
     console.log(json);
 
-    router.push("/userLogin");
+    router.push("/login");
   }
 
   return (

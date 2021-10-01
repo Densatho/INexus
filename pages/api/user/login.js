@@ -3,7 +3,7 @@ import bcrypt from "bcryptjs";
 import { sign } from "jsonwebtoken";
 import cookie from "cookie";
 
-const setCookie = (res, name, value, options) => {
+export const setCookie = (res, name, value, options) => {
   const stringValue =
     typeof value === "object" ? "j:" + JSON.stringify(value) : String(value);
 
@@ -42,7 +42,10 @@ async function LoginApi(req, res) {
           path: "/",
         });
 
-        res.json({ message: "Welcome back to the app!" });
+        res.json({
+          message: "Welcome back to the app!",
+          isAdmin: user.IS_ADMIN,
+        });
       } else {
         res.status(500).json({
           message: "Password invalid",

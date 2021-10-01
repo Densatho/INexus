@@ -31,10 +31,15 @@ function UserLogin(props) {
       document.cookie = `nickname=${nicknameRef.current?.value}; expires=Session; secure=true; sameSite=Strict; path=/`;
       router.push("/");
     }
+    if (json.isAdmin) {
+      document.cookie = `isAdmin=true; expires=Session; secure=true; sameSite=Strict; path=/`;
+      router.push("/");
+    }
   }
 
   if (process.browser) {
-    if (document.cookie) {
+    let cookies = document.cookie?.split(/[\s,=;]+/);
+    if (cookies.includes("nickname")) {
       return <>Você já esta autenticado</>;
     }
   }
