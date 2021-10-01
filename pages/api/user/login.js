@@ -3,7 +3,7 @@ import bcrypt from "bcryptjs";
 import { sign } from "jsonwebtoken";
 import cookie from "cookie";
 
-const setCookie = (res, name, value, options) => {
+export const setCookie = (res, name, value, options) => {
   const stringValue =
     typeof value === "object" ? "j:" + JSON.stringify(value) : String(value);
 
