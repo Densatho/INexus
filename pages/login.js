@@ -57,7 +57,7 @@ function UserLogin(props) {
         mt="10"
         shadow="1px 1px rgba(0,0,0,0.4)"
         color="white"
-        borderRadius="2xl"
+        borderRadius="xl"
       >
         <Box fontWeight="bold" fontSize="18px">
           Login

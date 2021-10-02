@@ -30,7 +30,7 @@ function userManager({ jwt_resp, users }) {
   return (
     <Flex>
       <Sidebar />
-      <Box w="60vw" margin={12}>
+      <Box w="60vw" margin={12} bgColor="red">
         <p>Aqui vai a lista de usuários</p>
         <ul>{Object.entries(users).map(renderUser)}</ul>
       </Box>

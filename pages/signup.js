@@ -8,6 +8,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import bcrypt from "bcryptjs";
 import { useRef } from "react";
 import router from "next/router";
+import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 
 function UserSignUp(props) {
   const [show, setShow] = useState(false);
@@ -77,14 +78,17 @@ function UserSignUp(props) {
       <Container
         alignSelf="center"
         w="450px"
-        bgColor="#757575"
         textAlign="center"
         p="2.5"
         mt="10"
         shadow="1px 1px rgba(0,0,0,0.4)"
         color="white"
+        borderRadius="xl"
+        bgColor="#3B3B3B"
       >
-        Faça o seu Registro:
+        <Box fontWeight="bold" fontSize="18px">
+          Faça o seu Registro:
+        </Box>
         <Stack spacing={6} margin={4}>
           <form action="/userSignup" id="register">
             <FormControl>
@@ -140,9 +144,11 @@ function UserSignUp(props) {
                     bgColor="rgba(0,0,0,0)"
                     onClick={handleClick}
                     h={8}
-                    size="sm"
+                    size="md"
+                    bw={6}
+                    mr="4vh"
                   >
-                    {show ? "Hide" : "Show"}
+                    {show ? <ViewOffIcon /> : <ViewIcon />}
                   </Button>
                 </InputRightElement>
               </InputGroup>
@@ -160,9 +166,11 @@ function UserSignUp(props) {
                     bgColor="rgba(0,0,0,0)"
                     onClick={handleClick}
                     h={8}
-                    size="sm"
+                    size="md"
+                    bw={6}
+                    mr="4vh"
                   >
-                    {show ? "Hide" : "Show"}
+                    {show ? <ViewOffIcon /> : <ViewIcon />}
                   </Button>
                 </InputRightElement>
               </InputGroup>
