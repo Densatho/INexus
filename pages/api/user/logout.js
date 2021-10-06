@@ -18,7 +18,7 @@ export function clearCookie(res, cookies) {
 
 async function logoutApi(req, res) {
   if (req.method === "POST") {
-    let userCookies = ["nickname", "isAdmin", "auth", "balance"];
+    let userCookies = ["auth"];
     clearCookie(res, userCookies);
 
     res.json({ message: "User is logout" });
