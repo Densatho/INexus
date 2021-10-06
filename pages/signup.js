@@ -9,6 +9,8 @@ import bcrypt from "bcryptjs";
 import { useRef } from "react";
 import router from "next/router";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+import { getServerSideProps } from "src/components/authenticated";
+export { getServerSideProps };
 
 function UserSignUp(props) {
   const [show, setShow] = useState(false);

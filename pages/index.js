@@ -1,6 +1,8 @@
 import styles from "src/styles/Home.module.css";
 import { Box } from "@chakra-ui/react";
 import Image from "next/image";
+import { getServerSideProps } from "src/components/authenticated";
+export { getServerSideProps };
 
 function Home(props) {
   return (

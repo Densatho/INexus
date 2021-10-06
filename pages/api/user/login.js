@@ -29,6 +29,8 @@ async function LoginApi(req, res) {
           sub: user.NICKNAME,
           userName: user.NAME,
           userLastName: user.LASTNAME,
+          balance: user.BALANCE,
+          isAdmin: user.IS_ADMIN,
         };
         const jwt = sign(
           claims,

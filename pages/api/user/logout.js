@@ -1,12 +1,25 @@
 const UserConn = require("src/database/DBConnection/userConnection");
-import { setCookie } from "./login";
+import { serialize } from "cookie";
+
+export function clearCookie(res, cookies) {
+  let cookiesConfig = [];
+
+  cookies.forEach((cookie) => {
+    cookiesConfig.push(
+      serialize(cookie, "", {
+        maxAge: -1,
+        path: "/",
+      })
+    );
+  });
+
+  res.setHeader("Set-Cookie", cookiesConfig);
+}
 
 async function logoutApi(req, res) {
   if (req.method === "POST") {
-    setCookie(res, "auth", "", {
-      maxAge: -1,
-      path: "/",
-    });
+    let userCookies = ["nickname", "isAdmin", "auth", "balance"];
+    clearCookie(res, userCookies);
 
     res.json({ message: "User is logout" });
   } else {

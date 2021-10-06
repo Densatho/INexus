@@ -3,6 +3,8 @@ import { Box, Flex } from "@chakra-ui/react";
 import Layout from "src/components/Layout";
 import Image from "next/image";
 import Navbar from "src/components/Navbar";
+import { getServerSideProps } from "src/components/authenticated";
+export { getServerSideProps };
 
 function About(props) {
   return (

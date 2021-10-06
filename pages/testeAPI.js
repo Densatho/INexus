@@ -1,4 +1,6 @@
 import { Box, Button } from "@chakra-ui/react";
+import { getServerSideProps } from "src/components/authenticated";
+export { getServerSideProps };
 
 function TesteApi(props) {
   let testeResp;

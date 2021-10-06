@@ -13,32 +13,14 @@ import { Spacer, Divider } from "@chakra-ui/layout";
 import React from "react";
 import router from "next/router";
 
-let saldo = 1995.97;
-
-function Navbar(props) {
+function Navbar({ jwt_resp }) {
+  console.log(jwt_resp);
   let saldo = "";
-  let cookies;
-  if (process.browser) {
-    cookies = document.cookie?.split(/[\s,=;]+/);
-    if (cookies.includes("balance")) {
-      saldo = cookies[cookies.indexOf("balance") + 1];
-    }
+  if (jwt_resp.auth) {
+    saldo = jwt_resp.decoded.balance;
   }
 
   const logout = async () => {
-    console.log(cookies);
-    const clearCookies = async () => {
-      if (cookies.includes("nickname")) {
-        document.cookie = "nickname=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
-      }
-      if (cookies.includes("isAdmin")) {
-        document.cookie = "isAdmin=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
-      }
-      if (cookies.includes("balance")) {
-        document.cookie = "balance=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
-      }
-    };
-
     await fetch("/api/user/logout", {
       method: "POST",
       headers: {
@@ -48,67 +30,53 @@ function Navbar(props) {
         confirm: true,
       }),
     });
-    await clearCookies();
 
-    window.location.href = "/";
+    router.push("/");
   };
 
   function isUser() {
-    if (process.browser) {
-      let username;
-      let admin;
-      if (cookies.includes("nickname")) {
-        let index = cookies.indexOf("nickname") + 1;
-        username = cookies[index];
-      }
-      if (cookies.includes("isAdmin")) {
-        let index = cookies.indexOf("isAdmin") + 1;
-        admin = cookies[index];
-      }
-
-      return username ? (
-        <>
-          <Flex>
-            <Link href="/balance">
-              <a>R${saldo}</a>
-            </Link>
-          </Flex>
-          <Divider orientation="vertical" ml="2" mr="2" />
-          <Menu>
-            <MenuButton
-              as={Avatar}
-              mr={6}
-              name={username}
-              src="/images/avatar.png"
-              size="sm"
-            />
-            <MenuList bg="#616161">
-              <MenuGroup title={username}>
-                <Link href="/bets">
-                  <MenuItem _focus={{ bg: "#878787" }}>Minhas Apostas</MenuItem>
-                </Link>
-                {admin ? (
-                  <a href="/admin/dashboard">
-                    <MenuItem _focus={{ bg: "#878787" }}>Dashboard</MenuItem>
-                  </a>
-                ) : (
-                  <></>
-                )}
-              </MenuGroup>
-              <MenuItem onClick={logout} _focus={{ bg: "#878787" }}>
-                Logout
-              </MenuItem>
-            </MenuList>
-          </Menu>
-        </>
-      ) : (
+    return jwt_resp.auth ? (
+      <>
         <Flex>
-          <Link href="/login">
-            <a>Login</a>
+          <Link href="/balance">
+            <a>R${saldo}</a>
           </Link>
         </Flex>
-      );
-    }
+        <Divider orientation="vertical" ml="2" mr="2" />
+        <Menu>
+          <MenuButton
+            as={Avatar}
+            mr={6}
+            name={jwt_resp.decoded.sub}
+            src="/images/avatar.png"
+            size="sm"
+          />
+          <MenuList bg="#616161">
+            <MenuGroup title={jwt_resp.decoded.sub}>
+              <Link href="/bets">
+                <MenuItem _focus={{ bg: "#878787" }}>Minhas Apostas</MenuItem>
+              </Link>
+              {jwt_resp.decoded.isAdmin ? (
+                <Link href="/admin/">
+                  <MenuItem _focus={{ bg: "#878787" }}>Dashboard</MenuItem>
+                </Link>
+              ) : (
+                <></>
+              )}
+            </MenuGroup>
+            <MenuItem onClick={logout} _focus={{ bg: "#878787" }}>
+              Logout
+            </MenuItem>
+          </MenuList>
+        </Menu>
+      </>
+    ) : (
+      <Flex>
+        <Link href="/login">
+          <a>Login</a>
+        </Link>
+      </Flex>
+    );
   }
 
   return (

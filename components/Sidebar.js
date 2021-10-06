@@ -1,7 +1,37 @@
 import Icon from "@chakra-ui/icon";
 import { Divider, Flex } from "@chakra-ui/layout";
 import NavItem from "./NavItem";
+
 export default function Sidebar() {
+  const tags = ["Usuários", "Apostas", "Times", "Ligas"];
+  const childs = [
+    { tag: "Usuários", value: "Gerenciar Usuários", ref: "/admin/userManager" },
+    { tag: "Apostas", value: "Gerenciar Apostas", ref: "/admin/betManager" },
+    { tag: "Times", value: "Gerenciar Times", ref: "/admin/teamManager" },
+    { tag: "Ligas", value: "Gerenciar ligas", ref: "/admin/leagueManager" },
+  ];
+  let currentTag = "";
+
+  function renderChild(child) {
+    if (child.tag === currentTag) {
+      return (
+        <>
+          <NavItem type="child" title={child.value} destino={child.ref} />
+        </>
+      );
+    }
+  }
+
+  function renderTag(tag) {
+    currentTag = tag;
+    return (
+      <>
+        <NavItem type="father" title={tag} destino="" />
+        {childs.map(renderChild)}
+      </>
+    );
+  }
+
   return (
     <Flex
       pos="sticky"
@@ -15,18 +45,8 @@ export default function Sidebar() {
       background="#616161"
     >
       <Flex flexDirection="column">
-        <NavItem type="father" title="Usuários" destino=""></NavItem>
-        <NavItem
-          type="child"
-          title="Gerenciar Usuários"
-          destino="/admin/userManager"
-        ></NavItem>
-        <NavItem type="father" title="Apostas"></NavItem>
-        <NavItem
-          type="child"
-          title="Gerenciar Apostas"
-          destino="/admin/betManager"
-        ></NavItem>
+        <NavItem type="father" title="Dashboard" destino="/admin" />
+        {tags.map(renderTag)}
       </Flex>
     </Flex>
   );

@@ -53,3 +53,47 @@ export const both_authenticated = (fn) => async (req, res) => {
     }
   }
 };
+
+export async function getServerSideProps({ req, res }) {
+  const { cookies } = req;
+  let jwt_resp;
+
+  jwt_resp = await verify(
+    cookies.auth,
+    process.env.JWT_SECRET,
+    function (err, decoded) {
+      if (!err && decoded) {
+        return { auth: true, decoded };
+      }
+      return { auth: false };
+    }
+  );
+
+  if (!jwt_resp.auth) {
+    jwt_resp = await verify(
+      cookies.auth,
+      process.env.JWT_ADMIN_SECRET,
+      function (err, decoded) {
+        if (!err && decoded) {
+          return { auth: true, decoded };
+        }
+        return { auth: false };
+      }
+    );
+  }
+
+  return { props: { jwt_resp } };
+}
+
+export async function adminAuth(auth) {
+  return await verify(
+    auth,
+    process.env.JWT_ADMIN_SECRET,
+    function (err, decoded) {
+      if (!err && decoded) {
+        return { auth: true, decoded };
+      }
+      return { auth: false };
+    }
+  );
+}

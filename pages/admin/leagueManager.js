@@ -1,29 +1,28 @@
 import { Box, Flex } from "@chakra-ui/layout";
 import Sidebar from "src/components/Sidebar";
-import { verify } from "jsonwebtoken";
 import { adminAuth } from "src/components/authenticated";
 
-function betManager({ jwt_resp, bets }) {
+function leagueManager({ jwt_resp, leagues }) {
   if (!jwt_resp.auth) {
     return <>você não é um Adminstrador</>;
   }
 
-  function renderBet(bet) {
-    bet = bet[1];
+  function renderLeague(league) {
+    league = league[1];
     return (
       <li>
-        bet: dono da aposta: {bet.USERNICKNAME}, id do jogo: {bet.GAMEId}, odd:{" "}
-        {bet.ODDS}, valor: {bet.BET_VALUE}, {bet.GAIN ? "ganhou" : "perdeu"},
-        time apostado: {bet.TEAMTEAMNAME}{" "}
+        League: {league.TEAM_NAME}, vitorias: {league.WINS}, derrotas:{" "}
+        {league.LOSSES}, criado em {league.createdAt}, atualizado em:{" "}
+        {league.updatedAt}
       </li>
     );
   }
 
-  if (!bets[0]) {
+  if (!leagues[0]) {
     return (
       <Flex>
         <Sidebar />
-        <p>Não tem apostas</p>
+        <p>Não tem times</p>
       </Flex>
     );
   }
@@ -32,8 +31,8 @@ function betManager({ jwt_resp, bets }) {
     <Flex>
       <Sidebar />
       <Box w="60vw" margin={12}>
-        <p>Aqui vai a lista de apostas</p>
-        <ul>{Object.entries(bets).map(renderBet)}</ul>
+        <p>Aqui vai a lista de ligas</p>
+        <ul>{Object.entries(leagues).map(renderLeague)}</ul>
       </Box>
     </Flex>
   );
@@ -43,15 +42,15 @@ export async function getServerSideProps({ req, res }) {
   const { cookies } = req;
   const jwt_resp = await adminAuth(cookies.auth);
 
-  const reqU = await fetch(process.env.API_URL + "bets", {
+  const reqT = await fetch(process.env.API_URL + "teams", {
     method: "GET",
     headers: {
       cookie: req.headers.cookie,
     },
   });
-  let bets = await reqU.json();
+  let leagues = await reqT.json();
 
-  return { props: { jwt_resp, bets } };
+  return { props: { jwt_resp, leagues } };
 }
 
-export default betManager;
+export default leagueManager;

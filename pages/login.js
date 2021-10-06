@@ -7,6 +7,8 @@ import { Box, Container, Flex, Spacer, Stack } from "@chakra-ui/layout";
 import Link from "next/link";
 import { useRef } from "react";
 import router from "next/router";
+import { getServerSideProps } from "src/components/authenticated";
+export { getServerSideProps };
 
 function UserLogin(props) {
   const [show, setShow] = useState(false);
@@ -28,12 +30,6 @@ function UserLogin(props) {
     const json = await resp.json();
     console.log(json);
     if (json.message === "Welcome back to the app!") {
-      document.cookie = `nickname=${nicknameRef.current?.value}; expires=Session; secure=true; sameSite=Strict; path=/`;
-      document.cookie = `balance=${json.balance}; expires=Session; secure=true; sameSite=Strict; path=/`;
-      router.push("/");
-    }
-    if (json.isAdmin) {
-      document.cookie = `isAdmin=true; expires=Session; secure=true; sameSite=Strict; path=/`;
       router.push("/");
     }
   }

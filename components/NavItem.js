@@ -16,13 +16,13 @@ export default function NavItem({ type, title, destino }) {
     >
       <Menu placement="right">
         {destino != "" ? (
-          <a href={destino}>
+          <Link href={destino}>
             <MenuButton>
               <Flex>
                 <Text>{title}</Text>
               </Flex>
             </MenuButton>
-          </a>
+          </Link>
         ) : (
           <Text>{title}</Text>
         )}
