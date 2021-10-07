@@ -1,7 +1,17 @@
-import { Box, Flex } from "@chakra-ui/layout";
+import { Box, Flex, Center } from "@chakra-ui/layout";
 import Sidebar from "src/components/Sidebar";
 import { verify } from "jsonwebtoken";
 import { adminAuth } from "src/components/authenticated";
+import {
+  Table,
+  Thead,
+  Tbody,
+  Tfoot,
+  Tr,
+  Th,
+  Td,
+  TableCaption,
+} from "@chakra-ui/react";
 
 function betManager({ jwt_resp, bets }) {
   if (!jwt_resp.auth) {
@@ -11,11 +21,16 @@ function betManager({ jwt_resp, bets }) {
   function renderBet(bet) {
     bet = bet[1];
     return (
-      <li>
-        bet: dono da aposta: {bet.USERNICKNAME}, id do jogo: {bet.GAMEId}, odd:{" "}
-        {bet.ODDS}, valor: {bet.BET_VALUE}, {bet.GAIN ? "ganhou" : "perdeu"},
-        time apostado: {bet.TEAMTEAMNAME}{" "}
-      </li>
+      <>
+        <Tr>
+          <Td>{bet.USERNICKNAME}</Td>
+          <Td isNumeric>{bet.GAMEId}</Td>
+          <Td isNumeric>{bet.ODDS}</Td>
+          <Td isNumeric>{bet.BET_VALUE}</Td>
+          <Td>{bet.GAIN ? "ganhou" : "perdeu"}</Td>
+          <Td>{bet.TEAMTEAMNAME}</Td>
+        </Tr>
+      </>
     );
   }
 
@@ -31,9 +46,23 @@ function betManager({ jwt_resp, bets }) {
   return (
     <Flex>
       <Sidebar />
-      <Box w="60vw" margin={12}>
-        <p>Aqui vai a lista de apostas</p>
-        <ul>{Object.entries(bets).map(renderBet)}</ul>
+      <Box w="60%" ml="15%">
+        <Table variant="striped" colorScheme="whatsapp">
+          <TableCaption placement="top" fontWeight="bold" fontSize="22pt">
+            Lista de apostas
+          </TableCaption>
+          <Thead>
+            <Tr>
+              <Th>Apostador</Th>
+              <Th isNumeric>ID do jogo</Th>
+              <Th isNumeric>Odds</Th>
+              <Th isNumeric>Valor da aposta</Th>
+              <Th>Resultado</Th>
+              <Th>Time Apostado</Th>
+            </Tr>
+          </Thead>
+          <Tbody>{Object.entries(bets).map(renderBet)}</Tbody>
+        </Table>
       </Box>
     </Flex>
   );

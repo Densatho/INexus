@@ -1,7 +1,15 @@
 import { Box, Flex } from "@chakra-ui/layout";
 import Sidebar from "src/components/Sidebar";
-import { verify } from "jsonwebtoken";
 import { adminAuth } from "src/components/authenticated";
+import {
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
+  TableCaption,
+} from "@chakra-ui/react";
 
 function teamManager({ jwt_resp, team }) {
   if (!jwt_resp.auth) {
@@ -11,10 +19,15 @@ function teamManager({ jwt_resp, team }) {
   function renderTeam(team) {
     team = team[1];
     return (
-      <li>
-        Time: {team.TEAM_NAME}, vitorias: {team.WINS}, derrotas: {team.LOSSES},
-        criado em {team.createdAt}, atualizado em: {team.updatedAt}
-      </li>
+      <>
+        <Tr>
+          <Td>{team.TEAM_NAME}</Td>
+          <Td isNumeric>{team.WINS}</Td>
+          <Td isNumeric>{team.LOSSES}</Td>
+          <Td>{team.createdAt}</Td>
+          <Td>{team.updatedAt}</Td>
+        </Tr>
+      </>
     );
   }
 
@@ -22,7 +35,7 @@ function teamManager({ jwt_resp, team }) {
     return (
       <Flex>
         <Sidebar />
-        <p>Não tem times</p>
+        <p>Não há times cadastrados.</p>
       </Flex>
     );
   }
@@ -30,9 +43,22 @@ function teamManager({ jwt_resp, team }) {
   return (
     <Flex>
       <Sidebar />
-      <Box w="60vw" margin={12}>
-        <p>Aqui vai a lista de times</p>
-        <ul>{Object.entries(team).map(renderTeam)}</ul>
+      <Box w="60%" ml="15%">
+        <Table variant="striped" colorScheme="whatsapp">
+          <TableCaption placement="top" fontWeight="bold" fontSize="22pt">
+            Lista de Times
+          </TableCaption>
+          <Thead>
+            <Tr>
+              <Th>Time</Th>
+              <Th isNumeric>Vitórias</Th>
+              <Th isNumeric>Derrotas</Th>
+              <Th>Data de Criação</Th>
+              <Th>Data de Alteração</Th>
+            </Tr>
+          </Thead>
+          <Tbody>{Object.entries(team).map(renderTeam)}</Tbody>
+        </Table>
       </Box>
     </Flex>
   );

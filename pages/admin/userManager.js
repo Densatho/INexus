@@ -1,6 +1,16 @@
 import { Box, Flex } from "@chakra-ui/layout";
 import Sidebar from "src/components/Sidebar";
 import { verify } from "jsonwebtoken";
+import {
+  Table,
+  Thead,
+  Tbody,
+  Tfoot,
+  Tr,
+  Th,
+  Td,
+  TableCaption,
+} from "@chakra-ui/react";
 import { adminAuth } from "src/components/authenticated";
 
 function userManager({ jwt_resp, users }) {
@@ -11,11 +21,17 @@ function userManager({ jwt_resp, users }) {
   function renderUser(user) {
     user = user[1];
     return (
-      <li>
-        User: {user.NICKNAME}, contém: R${user.BALANCE}, nome completo:{" "}
-        {user.NAME} {user.LASTNAME}, dia de nascimento é {user.BIRTHDAY}, email:{" "}
-        {user.EMAIL}
-      </li>
+      <>
+        <Tr>
+          <Td>{user.NICKNAME}</Td>
+          <Td>{user.BALANCE}</Td>
+          <Td>
+            {user.NAME} {user.LASTNAME}
+          </Td>
+          <Td>{user.BIRTHDAY}</Td>
+          <Td>{user.EMAIL}</Td>
+        </Tr>
+      </>
     );
   }
 
@@ -23,7 +39,7 @@ function userManager({ jwt_resp, users }) {
     return (
       <Flex>
         <Sidebar />
-        <p>Não tem usuários</p>
+        <p>Não há usuários cadastrados.</p>
       </Flex>
     );
   }
@@ -31,9 +47,22 @@ function userManager({ jwt_resp, users }) {
   return (
     <Flex>
       <Sidebar />
-      <Box w="60vw" margin={12} bgColor="red">
-        <p>Aqui vai a lista de usuários</p>
-        <ul>{Object.entries(users).map(renderUser)}</ul>
+      <Box w="60%" ml="15%">
+        <Table variant="striped" colorScheme="whatsapp">
+          <TableCaption placement="top" fontWeight="bold" fontSize="22pt">
+            Lista de Usuários
+          </TableCaption>
+          <Thead>
+            <Tr>
+              <Th>Usuário</Th>
+              <Th isNumeric>Saldo</Th>
+              <Th>Nome Completo</Th>
+              <Th>Data de Nascimento</Th>
+              <Th>Email</Th>
+            </Tr>
+          </Thead>
+          <Tbody>{Object.entries(users).map(renderUser)}</Tbody>
+        </Table>
       </Box>
     </Flex>
   );

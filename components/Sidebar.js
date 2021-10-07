@@ -8,7 +8,7 @@ export default function Sidebar() {
     { tag: "Usuários", value: "Gerenciar Usuários", ref: "/admin/userManager" },
     { tag: "Apostas", value: "Gerenciar Apostas", ref: "/admin/betManager" },
     { tag: "Times", value: "Gerenciar Times", ref: "/admin/teamManager" },
-    { tag: "Ligas", value: "Gerenciar ligas", ref: "/admin/leagueManager" },
+    { tag: "Ligas", value: "Gerenciar Ligas", ref: "/admin/leagueManager" },
   ];
   let currentTag = "";
 
