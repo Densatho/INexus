@@ -14,7 +14,6 @@ import React from "react";
 import router from "next/router";
 
 function Navbar({ jwt_resp }) {
-  console.log(jwt_resp);
   let saldo = "";
   if (jwt_resp.auth) {
     saldo = jwt_resp.decoded.balance;
