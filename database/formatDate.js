@@ -11,7 +11,9 @@ module.exports = {
     date = new Date(date);
     let formatedDate = `${date.getDate()}/${
       date.getMonth() + 1
-    }/${date.getFullYear()}:${date.getHours()} hour(s) and ${date.getMinutes()} minute(s)`;
+    }/${date.getFullYear()} às ${
+      date.getHours() < 10 ? 0 : ""
+    }${date.getHours()}:${date.getMinutes() < 10 ? 0 : ""}${date.getMinutes()}`;
     return formatedDate;
   },
 };

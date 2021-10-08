@@ -4,6 +4,7 @@ const { formatDateWithHour } = require("src/database/formatDate");
 async function getLeagueByName(req, res) {
   let leagueName = req.query.leagueName;
   let league = await leagueConn.getLeagueByName(leagueName);
+  let isDeleted;
 
   if (league) {
     if (req.method === "PUT") {
@@ -17,14 +18,10 @@ async function getLeagueByName(req, res) {
           req.body.leagueName ? req.body.leagueName : leagueName
         );
       }
+    } else if (req.method === "DELETE") {
+      isDeleted = leagueConn.delete(leagueName);
     }
-    league.dataValues.createdAt = formatDateWithHour(
-      league.dataValues.createdAt
-    );
-    league.dataValues.updatedAt = formatDateWithHour(
-      league.dataValues.updatedAt
-    );
-    res.json(league);
+    res.json(!isDeleted ? league : { isDeleted: isDeleted });
   } else {
     res.status(500).json({
       message: "This league name doesn't exists",

@@ -1,25 +1,48 @@
 import { Box, Flex } from "@chakra-ui/layout";
+import { Button } from "@chakra-ui/button";
 import Sidebar from "src/components/Sidebar";
-import { verify } from "jsonwebtoken";
 import {
   Table,
   Thead,
   Tbody,
-  Tfoot,
   Tr,
   Th,
   Td,
   TableCaption,
 } from "@chakra-ui/react";
+import { DeleteIcon } from "@chakra-ui/icons";
 import { adminAuth } from "src/components/authenticated";
+import { formatDate } from "src/database/formatDate";
+import { useState } from "react";
 
 function userManager({ jwt_resp, users }) {
+  const [usersList, setUsersState] = useState(Object.values(users));
+
   if (!jwt_resp.auth) {
     return <>você não é um Adminstrador</>;
   }
 
+  const handleDelete = async (nickname) => {
+    let resp = await fetch("/api/user/" + nickname, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    let respJson = await resp.json();
+    if (respJson.isDeleted) {
+      let newUsers = await fetch("/api/users", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      let respNewUsers = await newUsers.json();
+      setUsersState(Object.values(respNewUsers));
+    }
+  };
+
   function renderUser(user) {
-    user = user[1];
     return (
       <>
         <Tr>
@@ -28,8 +51,16 @@ function userManager({ jwt_resp, users }) {
           <Td>
             {user.NAME} {user.LASTNAME}
           </Td>
-          <Td>{user.BIRTHDAY}</Td>
+          <Td>{formatDate(user.BIRTHDAY)}</Td>
           <Td>{user.EMAIL}</Td>
+          <Td>
+            <DeleteIcon
+              color="red"
+              cursor="pointer"
+              ml={4}
+              onClick={(e) => handleDelete(user.NICKNAME)}
+            />
+          </Td>
         </Tr>
       </>
     );
@@ -59,9 +90,10 @@ function userManager({ jwt_resp, users }) {
               <Th>Nome Completo</Th>
               <Th>Data de Nascimento</Th>
               <Th>Email</Th>
+              <Th>Excluir</Th>
             </Tr>
           </Thead>
-          <Tbody>{Object.entries(users).map(renderUser)}</Tbody>
+          <Tbody>{usersList.map(renderUser)}</Tbody>
         </Table>
       </Box>
     </Flex>

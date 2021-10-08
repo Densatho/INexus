@@ -1,11 +1,11 @@
 const UserConn = require("src/database/DBConnection/userConnection");
-const { formatDateWithHour, formatDate } = require("src/database/formatDate");
 import bcrypt from "bcryptjs";
 import { both_authenticated } from "src/components/authenticated";
 
 async function getUserByNick(req, res) {
   let nickname = req.query.nickname;
   let user = await UserConn.getUserByNickname(nickname);
+  let isDeleted;
 
   if (user) {
     if (req.method === "PUT") {
@@ -41,11 +41,10 @@ async function getUserByNick(req, res) {
       if (updatedUser) {
         user = await UserConn.getUserByNickname(nickname);
       }
+    } else if (req.method === "DELETE") {
+      isDeleted = await UserConn.delete(nickname);
     }
-    user.dataValues.createdAt = formatDateWithHour(user.dataValues.createdAt);
-    user.dataValues.updatedAt = formatDateWithHour(user.dataValues.updatedAt);
-    user.dataValues.BIRTHDAY = formatDate(user.dataValues.BIRTHDAY);
-    res.json(user);
+    res.json(!isDeleted ? user : { isDeleted: isDeleted });
   } else {
     res.status(500).json({
       message: "This nickname doesn't exists",

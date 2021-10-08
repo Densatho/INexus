@@ -7,29 +7,32 @@ import { useRef } from "react";
 import router from "next/router";
 import { adminAuth } from "src/components/authenticated";
 
-function teamUpdate({ jwt_resp, team }) {
-  const teamNameRef = useRef(null);
+function leagueUpdate({ jwt_resp, league }) {
+  const leagueNameRef = useRef(null);
+  const countryRef = useRef(null);
 
   async function commit() {
-    let teamName = teamNameRef.current?.value;
+    let leagueName = leagueNameRef.current?.value;
+    let country = countryRef.current?.value;
 
-    if (!teamName) {
+    if (!leagueName || !country) {
       return;
     }
 
-    let resp = await fetch("/api/team/" + team.TEAM_NAME, {
+    let resp = await fetch("/api/league/" + league.LEAGUE_NAME, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        teamName: teamName,
+        leagueName: leagueName,
+        region: country,
       }),
     });
     const json = await resp.json();
     console.log(json);
 
-    router.push("/admin/teamManager");
+    router.push("/admin/leagueManager");
   }
 
   if (!jwt_resp.auth) {
@@ -50,18 +53,22 @@ function teamUpdate({ jwt_resp, team }) {
         bgColor="#3B3B3B"
       >
         <Box fontWeight="bold" fontSize="18px">
-          Atualizando {team.TEAM_NAME}:
+          Atualizando {league.LEAGUE_NAME}:
         </Box>
         <Stack spacing={6} margin={4}>
           <form action="/userSignup" id="register">
             <FormControl>
-              <FormLabel>Nome do time:</FormLabel>
+              <FormLabel>Nome da liga:</FormLabel>
               <Input
-                placeholder="nome do time"
-                name="teamName"
-                id="signupTeamName"
-                ref={teamNameRef}
-                defaultValue={team.TEAM_NAME}
+                placeholder="nome da liga"
+                ref={leagueNameRef}
+                defaultValue={league.LEAGUE_NAME}
+              />
+              <FormLabel mt={2}>País da liga:</FormLabel>
+              <Input
+                placeholder="país da liga"
+                ref={countryRef}
+                defaultValue={league.REGION}
               />
               <Box marginTop={4}>
                 <Button
@@ -69,7 +76,7 @@ function teamUpdate({ jwt_resp, team }) {
                   datainput="loginForm"
                   onClick={commit}
                 >
-                  Atualizar time
+                  Atualizar liga
                 </Button>
               </Box>
             </FormControl>
@@ -85,7 +92,7 @@ export async function getServerSideProps({ req, res, query }) {
   const { cookies } = req;
   const jwt_resp = await adminAuth(cookies.auth);
 
-  const apiUrl = process.env.API_URL + "team/" + query.teamName;
+  const apiUrl = process.env.API_URL + "league/" + query.leagueName;
   const reqT = await fetch(apiUrl, {
     method: "GET",
     headers: {
@@ -93,9 +100,9 @@ export async function getServerSideProps({ req, res, query }) {
     },
   });
 
-  let team = await reqT.json();
+  let league = await reqT.json();
 
-  return { props: { jwt_resp, team } };
+  return { props: { jwt_resp, league } };
 }
 
-export default teamUpdate;
+export default leagueUpdate;

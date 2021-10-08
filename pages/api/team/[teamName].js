@@ -3,6 +3,7 @@ const TeamConn = require("src/database/DBConnection/teamConnection");
 async function getTeamByName(req, res) {
   let teamName = req.query.teamName;
   let team = await TeamConn.getTeamByName(teamName);
+  let isDeleted;
 
   if (team) {
     if (req.method === "PUT") {
@@ -15,8 +16,10 @@ async function getTeamByName(req, res) {
           req.body.teamName ? req.body.teamName : teamName
         );
       }
+    } else if (req.method === "DELETE") {
+      isDeleted = TeamConn.delete(teamName);
     }
-    res.json(team);
+    res.json(!isDeleted ? team : { isDeleted: isDeleted });
   } else {
     res.status(500).json({
       message: "This Team name doesn't exists",

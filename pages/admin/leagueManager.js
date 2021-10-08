@@ -5,20 +5,44 @@ import {
   Table,
   Thead,
   Tbody,
-  Tfoot,
   Tr,
   Th,
   Td,
   TableCaption,
 } from "@chakra-ui/react";
-import { EmailIcon } from "@chakra-ui/icon";
+import Link from "next/link";
+import { useState } from "react";
+import { DeleteIcon, EditIcon, AddIcon } from "@chakra-ui/icons";
+
 function leagueManager({ jwt_resp, leagues }) {
+  const [leaguesList, setLeagues] = useState(Object.values(leagues));
+
+  const handleDelete = async (leagueName) => {
+    let resp = await fetch("/api/league/" + leagueName, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    let respJson = await resp.json();
+    console.log(respJson);
+    if (respJson.isDeleted) {
+      let newLeagues = await fetch("/api/leagues", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      let respNewLeagues = await newLeagues.json();
+      setLeagues(Object.values(respNewLeagues));
+    }
+  };
+
   if (!jwt_resp.auth) {
     return <>você não é um Adminstrador</>;
   }
 
   function renderLeague(league) {
-    league = league[1];
     return (
       <>
         <Tr>
@@ -26,6 +50,20 @@ function leagueManager({ jwt_resp, leagues }) {
           <Td>{league.REGION}</Td>
           <Td>{league.createdAt}</Td>
           <Td>{league.updatedAt}</Td>
+          <Td>
+            {" "}
+            <Link
+              href="league/[leagueName]"
+              as={`league/${league.LEAGUE_NAME}`}
+            >
+              <EditIcon mr={4} cursor="pointer" />
+            </Link>
+            <DeleteIcon
+              color="red"
+              cursor="pointer"
+              onClick={(e) => handleDelete(league.LEAGUE_NAME)}
+            />
+          </Td>
         </Tr>
       </>
     );
@@ -54,9 +92,15 @@ function leagueManager({ jwt_resp, leagues }) {
               <Th>País</Th>
               <Th>Data de Criação</Th>
               <Th>Data de Alteração</Th>
+              <Th>Editar e Excluir</Th>
             </Tr>
           </Thead>
-          <Tbody>{Object.entries(leagues).map(renderLeague)}</Tbody>
+          <Tbody>{leaguesList.map(renderLeague)}</Tbody>
+          <TableCaption color="green">
+            <Link href="league/add">
+              <a>Adicionar liga</a>
+            </Link>
+          </TableCaption>
         </Table>
       </Box>
     </Flex>

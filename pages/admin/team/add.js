@@ -7,7 +7,7 @@ import { useRef } from "react";
 import router from "next/router";
 import { adminAuth } from "src/components/authenticated";
 
-function teamUpdate({ jwt_resp, team }) {
+function teamAdd({ jwt_resp }) {
   const teamNameRef = useRef(null);
 
   async function commit() {
@@ -17,8 +17,8 @@ function teamUpdate({ jwt_resp, team }) {
       return;
     }
 
-    let resp = await fetch("/api/team/" + team.TEAM_NAME, {
-      method: "PUT",
+    let resp = await fetch("/api/team/add", {
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
@@ -50,26 +50,20 @@ function teamUpdate({ jwt_resp, team }) {
         bgColor="#3B3B3B"
       >
         <Box fontWeight="bold" fontSize="18px">
-          Atualizando {team.TEAM_NAME}:
+          Criando novo time:
         </Box>
         <Stack spacing={6} margin={4}>
           <form action="/userSignup" id="register">
             <FormControl>
               <FormLabel>Nome do time:</FormLabel>
-              <Input
-                placeholder="nome do time"
-                name="teamName"
-                id="signupTeamName"
-                ref={teamNameRef}
-                defaultValue={team.TEAM_NAME}
-              />
+              <Input placeholder="nome do time" ref={teamNameRef} />
               <Box marginTop={4}>
                 <Button
                   colorScheme="teal"
                   datainput="loginForm"
                   onClick={commit}
                 >
-                  Atualizar time
+                  Criar time
                 </Button>
               </Box>
             </FormControl>
@@ -84,18 +78,7 @@ function teamUpdate({ jwt_resp, team }) {
 export async function getServerSideProps({ req, res, query }) {
   const { cookies } = req;
   const jwt_resp = await adminAuth(cookies.auth);
-
-  const apiUrl = process.env.API_URL + "team/" + query.teamName;
-  const reqT = await fetch(apiUrl, {
-    method: "GET",
-    headers: {
-      cookie: req.headers.cookie,
-    },
-  });
-
-  let team = await reqT.json();
-
-  return { props: { jwt_resp, team } };
+  return { props: { jwt_resp } };
 }
 
-export default teamUpdate;
+export default teamAdd;
