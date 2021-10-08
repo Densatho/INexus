@@ -1,2 +1,3 @@
 -- SQLite
+DROP TABLE GAMEs;
 DROP TABLE BETs;

@@ -26,5 +26,8 @@ Games.belongsTo(Team, {
 Games.belongsTo(Team, {
   as: "TEAM_2_",
 });
+Games.belongsTo(Team, {
+  as: "WinnerTeam",
+});
 
 module.exports = Games;

@@ -3,12 +3,16 @@ import { Divider, Flex } from "@chakra-ui/layout";
 import NavItem from "./NavItem";
 
 export default function Sidebar() {
-  const tags = ["Usuários", "Apostas", "Times", "Ligas"];
+  const tags = ["Jogos", "Times", "Ligas", "Usuários", "Apostas"];
   const childs = [
     { tag: "Usuários", value: "Gerenciar Usuários", ref: "/admin/userManager" },
     { tag: "Apostas", value: "Gerenciar Apostas", ref: "/admin/betManager" },
     { tag: "Times", value: "Gerenciar Times", ref: "/admin/teamManager" },
+    { tag: "Times", value: "Adicionar Time", ref: "/admin/team/add" },
     { tag: "Ligas", value: "Gerenciar Ligas", ref: "/admin/leagueManager" },
+    { tag: "Ligas", value: "Adicionar Liga", ref: "/admin/league/add" },
+    { tag: "Jogos", value: "Gerenciar Jogos", ref: "/admin/gameManager" },
+    { tag: "Jogos", value: "Adicionar Jogo", ref: "/admin/game/add" },
   ];
   let currentTag = "";
 

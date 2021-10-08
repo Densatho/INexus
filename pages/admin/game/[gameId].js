@@ -8,9 +8,13 @@ import router from "next/router";
 import { adminAuth } from "src/components/authenticated";
 import Sidebar from "src/components/Sidebar";
 
-function leagueUpdate({ jwt_resp, league }) {
-  const leagueNameRef = useRef(null);
-  const countryRef = useRef(null);
+function leagueUpdate({ jwt_resp, leagues, teams }) {
+  const [gameDate, setDate] = useState(new Date(Date.now()));
+  const leagueRef = useRef(null);
+  const team1Ref = useRef(null);
+  const team2Ref = useRef(null);
+  let teamsList = Object.values(teams);
+  let leaguesList = Object.values(leagues);
 
   async function commit() {
     let leagueName = leagueNameRef.current?.value;
@@ -90,12 +94,12 @@ function leagueUpdate({ jwt_resp, league }) {
   );
 }
 
-export async function getServerSideProps({ req, res, query }) {
+export async function getServerSideProps({ req }) {
   const { cookies } = req;
   const jwt_resp = await adminAuth(cookies.auth);
 
-  const apiUrl = process.env.API_URL + "league/" + query.leagueName;
-  const reqT = await fetch(apiUrl, {
+  const apiUrl = process.env.API_URL;
+  const reqT = await fetch(apiUrl + "leagues", {
     method: "GET",
     headers: {
       cookie: req.headers.cookie,
@@ -104,7 +108,15 @@ export async function getServerSideProps({ req, res, query }) {
 
   let league = await reqT.json();
 
-  return { props: { jwt_resp, league } };
+  const reqT = await fetch(apiUrl + "teams", {
+    method: "GET",
+    headers: {
+      cookie: req.headers.cookie,
+    },
+  });
+  let teams = await reqT.json();
+
+  return { props: { jwt_resp, league, teams } };
 }
 
 export default leagueUpdate;

@@ -76,6 +76,7 @@ module.exports = {
     }
   },
   async update(
+    id,
     date,
     scoreboard,
     leagueName,
@@ -99,14 +100,8 @@ module.exports = {
         },
         {
           where: {
-            TEAM1TEAMNAME: {
-              [Op.eq]: teamName1,
-            },
-            TEAM2TEAMNAME: {
-              [Op.eq]: teamName2,
-            },
-            GAME_DATE: {
-              [Op.eq]: date,
+            id: {
+              [Op.eq]: id,
             },
           },
         }
@@ -118,19 +113,13 @@ module.exports = {
       return false;
     }
   },
-  async delete(date, teamName1, teamName2) {
+  async delete(id) {
     try {
       date = new Date(date);
       await Games.destroy({
         where: {
-          TEAM1TEAMNAME: {
-            [Op.eq]: teamName1,
-          },
-          TEAM2TEAMNAME: {
-            [Op.eq]: teamName2,
-          },
-          GAME_DATE: {
-            [Op.eq]: date,
+          id: {
+            [Op.eq]: id,
           },
         },
       });

@@ -1,11 +1,12 @@
 import { Button } from "@chakra-ui/button";
 import { FormControl, FormLabel } from "@chakra-ui/form-control";
 import { Input } from "@chakra-ui/input";
-import { Box, Container, Stack } from "@chakra-ui/layout";
+import { Box, Container, Stack, Flex } from "@chakra-ui/layout";
 import "react-datepicker/dist/react-datepicker.css";
 import { useRef } from "react";
 import router from "next/router";
 import { adminAuth } from "src/components/authenticated";
+import Sidebar from "src/components/Sidebar";
 
 function teamUpdate({ jwt_resp, team }) {
   const teamNameRef = useRef(null);
@@ -37,13 +38,14 @@ function teamUpdate({ jwt_resp, team }) {
   }
 
   return (
-    <>
+    <Flex>
+      <Sidebar />
       <Container
-        alignSelf="center"
+        h="200px"
         w="450px"
         textAlign="center"
         p="2.5"
-        mt="10"
+        mt={16}
         shadow="1px 1px rgba(0,0,0,0.4)"
         color="white"
         borderRadius="xl"
@@ -77,7 +79,7 @@ function teamUpdate({ jwt_resp, team }) {
         </Stack>
       </Container>
       ;
-    </>
+    </Flex>
   );
 }
 
