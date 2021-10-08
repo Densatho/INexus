@@ -1,11 +1,7 @@
 const gameConn = require("src/database/DBConnection/gamesConnection");
-const { formatDateWithHour } = require("src/database/formatDate");
 
 async function getGame(req, res) {
-  let id = req.query.id;
-  let teamName1 = req.query.team1;
-  let teamName2 = req.query.team2;
-  let date = req.query.date;
+  let id = req.query.gameId;
   let game = await gameConn.getGameById(id);
   let isDeleted;
 
@@ -13,15 +9,12 @@ async function getGame(req, res) {
     if (req.method === "PUT") {
       const updated = await gameConn.update(
         id,
-        date,
         req.body.scoreboard,
-        req.body.leagueName,
-        teamName1,
-        teamName2,
         req.body.date,
-        req.body.newLeagueName,
+        req.body.leagueName,
         req.body.teamName1,
-        req.body.teamName2
+        req.body.teamName2,
+        req.body.winnerTeam
       );
       if (updated) {
         game = await gameConn.getGameById(id);

@@ -12,14 +12,8 @@ module.exports = {
   },
   async getGameById(id) {
     try {
-      let game = await Games.findAll({
-        where: {
-          id: {
-            [Op.eq]: id,
-          },
-        },
-      });
-      return game[0];
+      let game = await Games.findByPk(id);
+      return game;
     } catch (error) {}
   },
   async getGameByTeamsAndDate(date, teamName1, teamName2) {
@@ -77,26 +71,23 @@ module.exports = {
   },
   async update(
     id,
-    date,
     scoreboard,
+    date,
     leagueName,
     teamName1,
     teamName2,
-    newDate,
-    newLeagueName,
-    newTeamName1,
-    newTeamName2
+    winnerTeam
   ) {
     try {
       date = new Date(date);
-      if (newDate) newDate = new Date(newDate);
       await Games.update(
         {
-          GAME_DATE: newDate ? newDate : date,
-          SCOREBOARD: scoreboard ? scoreboard : "",
-          LEAGUELEAGUENAME: newLeagueName ? newLeagueName : leagueName,
-          TEAM1TEAMNAME: newTeamName1 ? newTeamName1 : teamName1,
-          TEAM2TEAMNAME: newTeamName2 ? newTeamName2 : teamName2,
+          GAME_DATE: date,
+          SCOREBOARD: scoreboard,
+          LEAGUELEAGUENAME: leagueName,
+          TEAM1TEAMNAME: teamName1,
+          TEAM2TEAMNAME: teamName2,
+          WinnerTeamTEAMNAME: winnerTeam,
         },
         {
           where: {
@@ -115,7 +106,6 @@ module.exports = {
   },
   async delete(id) {
     try {
-      date = new Date(date);
       await Games.destroy({
         where: {
           id: {

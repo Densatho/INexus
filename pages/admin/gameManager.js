@@ -18,8 +18,9 @@ const { formatDateWithHour } = require("src/database/formatDate");
 function gameManager({ jwt_resp, games }) {
   const [gamesList, setGames] = useState(Object.values(games));
 
-  const handleDelete = async (leagueName) => {
-    let resp = await fetch("/api/league/" + leagueName, {
+  const handleDelete = async (gameId) => {
+    console.log(gameId);
+    let resp = await fetch("/api/game/" + gameId, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -28,14 +29,14 @@ function gameManager({ jwt_resp, games }) {
     let respJson = await resp.json();
     console.log(respJson);
     if (respJson.isDeleted) {
-      let newLeagues = await fetch("/api/leagues", {
+      let newGames = await fetch("/api/games", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
         },
       });
-      let respNewLeagues = await newLeagues.json();
-      setGames(Object.values(respNewLeagues));
+      let respNewGames = await newGames.json();
+      setGames(Object.values(respNewGames));
     }
   };
 
@@ -54,7 +55,7 @@ function gameManager({ jwt_resp, games }) {
           <Td>{game.WinnerTeamTEAMNAME}</Td>
           <Td>
             {" "}
-            <Link href="league/[gameId]" as={`league/${game.id}`}>
+            <Link href="game/[gameId]" as={`game/${game.id}`}>
               <EditIcon mr={4} cursor="pointer" />
             </Link>
             <DeleteIcon
