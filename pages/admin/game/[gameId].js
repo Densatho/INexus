@@ -34,7 +34,7 @@ function leagueUpdate({ jwt_resp, leagues, teams, game }) {
     let leagueName = leagueRef.current?.value || game.LEAGUELEAGUENAME;
     let teamName1 = team1Ref.current?.value || game.TEAM1TEAMNAME;
     let teamName2 = team2Ref.current?.value || game.TEAM2TEAMNAME;
-    let winnerTeam = WinTeamRef.current?.value;
+    let winnerTeam = WinTeamRef.current?.value || game.WinnerTeamTEAMNAME;
     let scoreboard = scoreboardRef.current?.value;
 
     if (!leagueName || !teamName1 || !teamName2) {
@@ -89,7 +89,10 @@ function leagueUpdate({ jwt_resp, leagues, teams, game }) {
                 {leaguesList.map(renderOptionLeague)}
               </Select>
               <FormLabel mt={2}>Time Vencedor:</FormLabel>
-              <Select placeholder="Selecione um time" ref={WinTeamRef}>
+              <Select
+                placeholder={game.WinnerTeamTEAMNAME || "Selecione um time"}
+                ref={WinTeamRef}
+              >
                 {teamsList.map(renderOptionTeam)}
               </Select>
               <FormLabel mt={2}>Scoreboard:</FormLabel>
