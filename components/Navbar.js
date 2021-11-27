@@ -15,7 +15,7 @@ import router from "next/router";
 
 function Navbar({ jwt_resp }) {
   let saldo = "";
-  if (jwt_resp.auth) {
+  if (jwt_resp?.auth) {
     saldo = jwt_resp.decoded.balance;
   }
 
