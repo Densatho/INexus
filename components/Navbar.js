@@ -34,7 +34,7 @@ function Navbar({ jwt_resp }) {
   };
 
   function isUser() {
-    return jwt_resp.auth ? (
+    return jwt_resp?.auth ? (
       <>
         <Flex>
           <Link href="/balance">
