@@ -7,11 +7,11 @@ export default function Home({ games }) {
 
   function renderGames(game) {
     return (
-      <Box>
+      <>
         <Center>{formatDateWithHour(game.GAME_DATE)}</Center>
         <Box bg="teal" mx={2} color="white">
           <Flex fontSize="16pt">
-            <Box bg="teal.800" w="150px" textAlign="left" px={2}>
+            <Box bg="teal.800" w="45%" textAlign="left" px={2}>
               {game.TEAM1TEAMNAME}
             </Box>
             <Box
@@ -22,7 +22,7 @@ export default function Home({ games }) {
               borderBottom="18px solid transparent"
               borderLeft="18px solid #234e52"
             ></Box>
-            vs
+            <Center w="10%">vs</Center>
             <Box
               ml={2}
               w="0"
@@ -31,12 +31,12 @@ export default function Home({ games }) {
               borderBottom="18px solid transparent"
               borderRight="18px solid #234e52"
             ></Box>
-            <Box bg="teal.800" w="150px" textAlign="right" px={2}>
+            <Box bg="teal.800" w="45%" textAlign="right" px={2}>
               {game.TEAM2TEAMNAME}
             </Box>
           </Flex>
         </Box>
-      </Box>
+      </>
     );
   }
 
@@ -45,9 +45,12 @@ export default function Home({ games }) {
   }
   return (
     <Box>
-      <Flex mt={8} mx={12}>
+      <Center fontSize="24pt" mt={4}>
+        Acontecendo Agora
+      </Center>
+      <Box mt={8} mx={12} w="50%">
         {games.map(renderGames)}
-      </Flex>
+      </Box>
     </Box>
   );
 }
