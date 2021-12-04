@@ -49,6 +49,7 @@ function Navbar({ jwt_resp }) {
             name={jwt_resp.decoded.sub}
             src="/images/avatar.png"
             size="sm"
+            cursor="pointer"
           />
           <MenuList bg="#616161">
             <MenuGroup title={jwt_resp.decoded.sub}>
@@ -86,12 +87,6 @@ function Navbar({ jwt_resp }) {
             <a>
               <Image src="/logo.png" alt="Logo" width="90px" height="16px" />
             </a>
-          </Link>
-        </Flex>
-        <Divider orientation="vertical" ml="2" mr="2" />
-        <Flex>
-          <Link href="/calendar">
-            <a>Calendário</a>
           </Link>
         </Flex>
         <Spacer />

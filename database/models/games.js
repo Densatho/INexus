@@ -14,6 +14,12 @@ const databaseConfig = {
     type: DataTypes.TEXT,
     allowNull: false,
   },
+  ODD1: {
+    type: DataTypes.FLOAT,
+  },
+  ODD2: {
+    type: DataTypes.FLOAT,
+  },
 };
 
 class Games extends Model {}

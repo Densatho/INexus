@@ -36,7 +36,7 @@ module.exports = {
       return game[0];
     } catch (error) {}
   },
-  async add(date, leagueName, teamName1, teamName2) {
+  async add(date, leagueName, teamName1, teamName2, odd1, odd2) {
     try {
       date = new Date(date);
       let league = await LeagueConn.getLeagueByName(leagueName);
@@ -46,6 +46,8 @@ module.exports = {
       let game = await Games.create({
         GAME_DATE: new Date(date),
         SCOREBOARD: "",
+        ODD1: odd1,
+        ODD2: odd2,
       });
       await game.setLEAGUE(league, {
         through: {

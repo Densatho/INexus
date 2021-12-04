@@ -40,16 +40,13 @@ export default function Home({ games }) {
     );
   }
 
-  if (!games[0]) {
-    return <></>;
-  }
   return (
     <Box>
       <Center fontSize="24pt" mt={4}>
         Acontecendo Agora
       </Center>
       <Box mt={8} mx={12} w="50%">
-        {games.map(renderGames)}
+        {games[0] ? games.map(renderGames) : "Não existe Jogos"}
       </Box>
     </Box>
   );

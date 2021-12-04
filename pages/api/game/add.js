@@ -6,14 +6,18 @@ async function addGame(req, res) {
     let game = await gameConn.getGameByTeamsAndDate(
       req.body.date,
       req.body.teamName1,
-      req.body.teamName2
+      req.body.teamName2,
+      req.body.odd1,
+      req.body.odd2
     );
     if (game === undefined) {
       let isCreated = await gameConn.add(
         req.body.date,
         req.body.leagueName,
         req.body.teamName1,
-        req.body.teamName2
+        req.body.teamName2,
+        req.body.odd1,
+        req.body.odd2
       );
       let resp = {
         isCreated: isCreated,

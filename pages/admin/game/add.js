@@ -15,6 +15,8 @@ function gameAdd({ jwt_resp, teams, leagues }) {
   const leagueRef = useRef(null);
   const team1Ref = useRef(null);
   const team2Ref = useRef(null);
+  const odd1Ref = useRef(null);
+  const odd2Ref = useRef(null);
   let teamsList = Object.values(teams);
   let leaguesList = Object.values(leagues);
 
@@ -30,6 +32,8 @@ function gameAdd({ jwt_resp, teams, leagues }) {
     let leagueName = leagueRef.current?.value;
     let teamName1 = team1Ref.current?.value;
     let teamName2 = team2Ref.current?.value;
+    let odd1 = odd1Ref.current?.value;
+    let odd2 = odd2Ref.current?.value;
 
     if (!leagueName || !teamName1 || !teamName2) {
       return;
@@ -45,6 +49,8 @@ function gameAdd({ jwt_resp, teams, leagues }) {
         date: gameDate,
         teamName1: teamName1,
         teamName2: teamName2,
+        odd1: odd1,
+        odd2: odd2,
       }),
     });
     const json = await resp.json();
@@ -61,7 +67,7 @@ function gameAdd({ jwt_resp, teams, leagues }) {
     <Flex>
       <Sidebar />
       <Container
-        h="450px"
+        h="600px"
         w="450px"
         textAlign="center"
         p="2.5"
@@ -85,10 +91,24 @@ function gameAdd({ jwt_resp, teams, leagues }) {
               <Select placeholder="Selecione um time" ref={team1Ref}>
                 {teamsList.map(renderOptionTeam)}
               </Select>
+              <FormLabel mt={2}>ODD do time 1</FormLabel>
+              <Input
+                placeholder="ODD do time 1"
+                name="nickname"
+                id="loginNickname"
+                ref={odd1Ref}
+              />
               <FormLabel mt={2}>Time 2:</FormLabel>
               <Select placeholder="Selecione um time" ref={team2Ref}>
                 {teamsList.map(renderOptionTeam)}
               </Select>
+              <FormLabel mt={2}>ODD do time 2</FormLabel>
+              <Input
+                placeholder="ODD do time 2"
+                name="nickname"
+                id="loginNickname"
+                ref={odd2Ref}
+              />
               <FormLabel marginTop={2}>Data e hora do jogo:</FormLabel>
               <DatePicker
                 showTimeSelect
