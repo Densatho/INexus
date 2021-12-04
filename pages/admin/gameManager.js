@@ -53,7 +53,7 @@ function gameManager({ jwt_resp, games }) {
           <Td>{game.TEAM1TEAMNAME}</Td>
           <Td>{game.ODD1}</Td>
           <Td>{game.TEAM2TEAMNAME}</Td>
-          <Td>{game.ODD1}</Td>
+          <Td>{game.ODD2}</Td>
           <Td>{game.WinnerTeamTEAMNAME}</Td>
           <Td>
             {" "}
