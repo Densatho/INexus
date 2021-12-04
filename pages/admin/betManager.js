@@ -18,6 +18,8 @@ function betManager({ jwt_resp, bets }) {
     return <>você não é um Adminstrador</>;
   }
 
+  console.log(bets);
+
   function renderBet(bet) {
     bet = bet[1];
     return (
