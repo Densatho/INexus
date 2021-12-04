@@ -77,7 +77,9 @@ module.exports = {
     date,
     leagueName,
     teamName1,
+    odd1,
     teamName2,
+    odd2,
     winnerTeam
   ) {
     try {
@@ -86,6 +88,8 @@ module.exports = {
         {
           GAME_DATE: date,
           SCOREBOARD: scoreboard,
+          ODD1: odd1,
+          ODD2: odd2,
           LEAGUELEAGUENAME: leagueName,
           TEAM1TEAMNAME: teamName1,
           TEAM2TEAMNAME: teamName2,

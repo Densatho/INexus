@@ -51,7 +51,9 @@ function gameManager({ jwt_resp, games }) {
           <Td>{formatDateWithHour(game.GAME_DATE)}</Td>
           <Td>{game.SCOREBOARD}</Td>
           <Td>{game.TEAM1TEAMNAME}</Td>
+          <Td>{game.ODD1}</Td>
           <Td>{game.TEAM2TEAMNAME}</Td>
+          <Td>{game.ODD1}</Td>
           <Td>{game.WinnerTeamTEAMNAME}</Td>
           <Td>
             {" "}
@@ -91,7 +93,9 @@ function gameManager({ jwt_resp, games }) {
               <Th>Data do jogo</Th>
               <Th>Placar</Th>
               <Th>Time 1</Th>
+              <Th>Odds 1</Th>
               <Th>Time 2</Th>
+              <Th>Odds 2</Th>
               <Th>Vencedor</Th>
               <Th>Editar e Excluir</Th>
             </Tr>

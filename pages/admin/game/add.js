@@ -92,23 +92,13 @@ function gameAdd({ jwt_resp, teams, leagues }) {
                 {teamsList.map(renderOptionTeam)}
               </Select>
               <FormLabel mt={2}>ODD do time 1</FormLabel>
-              <Input
-                placeholder="ODD do time 1"
-                name="nickname"
-                id="loginNickname"
-                ref={odd1Ref}
-              />
+              <Input placeholder="ODD do time 1" ref={odd1Ref} />
               <FormLabel mt={2}>Time 2:</FormLabel>
               <Select placeholder="Selecione um time" ref={team2Ref}>
                 {teamsList.map(renderOptionTeam)}
               </Select>
               <FormLabel mt={2}>ODD do time 2</FormLabel>
-              <Input
-                placeholder="ODD do time 2"
-                name="nickname"
-                id="loginNickname"
-                ref={odd2Ref}
-              />
+              <Input placeholder="ODD do time 2" ref={odd2Ref} />
               <FormLabel marginTop={2}>Data e hora do jogo:</FormLabel>
               <DatePicker
                 showTimeSelect

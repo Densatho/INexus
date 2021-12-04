@@ -17,6 +17,8 @@ function leagueUpdate({ jwt_resp, leagues, teams, game }) {
   const leagueRef = useRef(null);
   const team1Ref = useRef(null);
   const team2Ref = useRef(null);
+  const odd1Ref = useRef(null);
+  const odd2Ref = useRef(null);
   const WinTeamRef = useRef(null);
   const scoreboardRef = useRef(null);
   let teamsList = Object.values(teams);
@@ -34,6 +36,8 @@ function leagueUpdate({ jwt_resp, leagues, teams, game }) {
     let leagueName = leagueRef.current?.value || game.LEAGUELEAGUENAME;
     let teamName1 = team1Ref.current?.value || game.TEAM1TEAMNAME;
     let teamName2 = team2Ref.current?.value || game.TEAM2TEAMNAME;
+    let odd1 = odd1Ref.current?.value || game.ODD1;
+    let odd2 = odd2Ref.current?.value || game.ODD2;
     let winnerTeam = WinTeamRef.current?.value || game.WinnerTeamTEAMNAME;
     let scoreboard = scoreboardRef.current?.value;
 
@@ -53,6 +57,8 @@ function leagueUpdate({ jwt_resp, leagues, teams, game }) {
         teamName2: teamName2,
         scoreboard: scoreboard,
         winnerTeam: winnerTeam,
+        odd1: odd1,
+        odd2: odd2,
       }),
     });
     const json = await resp.json();
@@ -68,11 +74,11 @@ function leagueUpdate({ jwt_resp, leagues, teams, game }) {
     <Flex>
       <Sidebar />
       <Container
-        h="600px"
+        h="750px"
         w="450px"
         textAlign="center"
         p="2.5"
-        mt={12}
+        mt={8}
         shadow="1px 1px rgba(0,0,0,0.4)"
         color="white"
         borderRadius="xl"
@@ -105,10 +111,22 @@ function leagueUpdate({ jwt_resp, leagues, teams, game }) {
               <Select placeholder={game.TEAM1TEAMNAME} ref={team1Ref}>
                 {teamsList.map(renderOptionTeam)}
               </Select>
+              <FormLabel mt={2}>ODD do time 1</FormLabel>
+              <Input
+                placeholder="ODD do time 1"
+                ref={odd1Ref}
+                defaultValue={game.ODD1}
+              />
               <FormLabel mt={2}>Time 2:</FormLabel>
               <Select placeholder={game.TEAM2TEAMNAME} ref={team2Ref}>
                 {teamsList.map(renderOptionTeam)}
               </Select>
+              <FormLabel mt={2}>ODD do time 2</FormLabel>
+              <Input
+                placeholder="ODD do time 2"
+                ref={odd2Ref}
+                defaultValue={game.ODD2}
+              />
               <FormLabel marginTop={2}>Data e hora do jogo:</FormLabel>
               <DatePicker
                 showTimeSelect
