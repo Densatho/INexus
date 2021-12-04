@@ -196,6 +196,27 @@ module.exports = {
       return false;
     }
   },
+  async updateBalance(nickname, balance) {
+    try {
+      await User.update(
+        {
+          BALANCE: balance,
+        },
+        {
+          where: {
+            NICKNAME: {
+              [Op.eq]: nickname,
+            },
+          },
+        }
+      );
+
+      return true;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  },
   async isAdmin(nickname) {
     try {
       let user = await this.getUserByNicknameLogin(nickname);
