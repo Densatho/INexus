@@ -13,7 +13,9 @@ async function getGame(req, res) {
         req.body.date,
         req.body.leagueName,
         req.body.teamName1,
+        req.body.odd1,
         req.body.teamName2,
+        req.body.odd2,
         req.body.winnerTeam
       );
       if (updated) {
