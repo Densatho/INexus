@@ -40,7 +40,7 @@ export default function Home({ games }) {
               h="50px"
               bg="teal"
             ></Box>
-            <Center w="10%">
+            <Center w="25%">
               {game.ODD1} VS {game.ODD2}
             </Center>
             <Box
