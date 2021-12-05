@@ -47,7 +47,7 @@ function userManager({ jwt_resp, users }) {
       <>
         <Tr>
           <Td>{user.NICKNAME}</Td>
-          <Td>{user.BALANCE}</Td>
+          <Td isNumeric>{user.BALANCE}</Td>
           <Td>
             {user.NAME} {user.LASTNAME}
           </Td>

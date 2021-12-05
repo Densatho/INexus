@@ -23,6 +23,21 @@ module.exports = {
       return bet[0];
     } catch (error) {}
   },
+  async getBetsByGameIdAndWinnerTeam(gameId, winnerTeam) {
+    try {
+      let bets = await Bet.findAll({
+        where: {
+          GAMEId: {
+            [Op.eq]: gameId,
+          },
+          TEAMTEAMNAME: {
+            [Op.eq]: winnerTeam,
+          },
+        },
+      });
+      return bets;
+    } catch (error) {}
+  },
   async getBetByUserAndGame(nickname, gameId) {
     try {
       let bet = await Bet.findAll({
@@ -93,6 +108,53 @@ module.exports = {
       console.log(error);
       return false;
     }
+  },
+  async updateWinners(gameId, winnerTeam) {
+    try {
+      await Bet.update(
+        {
+          GAIN: true,
+        },
+        {
+          where: {
+            TEAMTEAMNAME: {
+              [Op.eq]: winnerTeam,
+            },
+            GAMEId: {
+              [Op.eq]: gameId,
+            },
+          },
+        }
+      );
+
+      return true;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+    // let bets = betsConn.getAll();
+    // let betsUpdate = [];
+    // Object.values(bets).map((bet) => {
+    //   if (bet.GAMEId === gameId && bet.TEAMTEAMNAME === winnerTeam)
+    //     betsUpdate.push(bet);
+    // });
+
+    // betsUpdate.forEach(async (bet) => {
+    //   let resp = await fetch(
+    //     process.env.API_URL + bet.USERNICKNAME + bet.GAMEId,
+    //     {
+    //       method: "PUT",
+    //       headers: {
+    //         "Content-Type": "application/json",
+    //       },
+    //       body: JSON.stringify({
+    //         gain: bet.GAIN,
+    //       }),
+    //     }
+    //   );
+    //   const json = await resp.json();
+    //   console.log(json);
+    // });
   },
   async delete(id) {
     try {

@@ -13,8 +13,6 @@ async function getBetByNicknameAndGameId(req, res) {
         bet = await betConn.getBetByUserAndGame(nickname, gameId);
       }
     }
-    bet.dataValues.createdAt = formatDateWithHour(bet.dataValues.createdAt);
-    bet.dataValues.updatedAt = formatDateWithHour(bet.dataValues.updatedAt);
     res.json(bet);
   } else {
     res.status(500).json({
