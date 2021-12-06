@@ -6,7 +6,7 @@ COPY package*.json ./
 
 RUN npm install
 
-RUM npm run build
+RUN npm run build
 
 COPY . .
 
