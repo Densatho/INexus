@@ -6,10 +6,6 @@ COPY package*.json ./
 
 RUN npm install
 
-COPY pages/ ./
-
-RUN npm run build
-
 COPY . .
 
 EXPOSE 3000
