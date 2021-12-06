@@ -8,19 +8,23 @@ export default function Home({ games }) {
   function renderGames(game) {
     return (
       <>
-        <Center mt={5}>{formatDateWithHour(game.GAME_DATE)}</Center>
+        <Center ml={-28} mt={5} fontFamily="Oxygen">
+          {formatDateWithHour(game.GAME_DATE)}
+        </Center>
         <Box
           boxShadow="base"
           h="50px"
-          bg="teal"
+          bg="#2a3248"
           mx={6}
           color="white"
           borderRadius="xl"
           zIndex="0"
+          key={game.GAME_DATE + game.TEAM1TEAMNAME + game.TEAM2TEAMNAME}
+          fontFamily="Oxygen"
         >
           <Flex fontSize="16pt">
             <Box
-              bg="teal.800"
+              bg="#49577b"
               w="45%"
               borderStartRadius="xl"
               textAlign="left"
@@ -28,7 +32,7 @@ export default function Home({ games }) {
               pt={2}
               h="50px"
             >
-              {game.TEAM1TEAMNAME}
+              {game.TEAM1TEAMNAME.toUpperCase()}
             </Box>
             <Box
               mr={2}
@@ -36,9 +40,9 @@ export default function Home({ games }) {
               h="0"
               borderTop="25px solid transparent"
               borderBottom="25px solid transparent"
-              borderLeft="25px solid #234e52"
+              borderLeft="25px solid #49577b"
               h="50px"
-              bg="teal"
+              bg="#2a3248"
             ></Box>
             <Center w="25%">
               {game.ODD1} VS {game.ODD2}
@@ -49,11 +53,11 @@ export default function Home({ games }) {
               h="0"
               borderTop="25px solid transparent"
               borderBottom="25px solid transparent"
-              borderRight="25px solid #234e52"
+              borderRight="25px solid #49577b"
               h="50px"
             ></Box>
             <Box
-              bg="teal.800"
+              bg="#49577b"
               w="45%"
               textAlign="right"
               px={4}
@@ -62,7 +66,7 @@ export default function Home({ games }) {
               h="50px"
               zIndex="2"
             >
-              {game.TEAM2TEAMNAME}
+              {game.TEAM2TEAMNAME.toUpperCase()}
             </Box>
             <Box
               borderEndRadius="xl"
@@ -75,7 +79,7 @@ export default function Home({ games }) {
             >
               <button>
                 <Box ml="6" mt="2" mr="1">
-                  <Link>APOSTAR</Link>
+                  <Link href={"/game/" + game.id}>APOSTAR</Link>
                 </Box>
               </button>
             </Box>
@@ -87,10 +91,10 @@ export default function Home({ games }) {
 
   return (
     <Box width="65vw" ml={32} mt={15}>
-      <Center fontSize="24pt" mt={4}>
+      <Center fontFamily="Oxygen" fontSize="24pt" mt={4} ml={-28}>
         Acontecendo Agora
       </Center>
-      <Box>{games[0] ? games.map(renderGames) : "Não existe Jogos"}</Box>
+      <Box>{games[0] ? games.map(renderGames) : "Não existem Jogos"}</Box>
     </Box>
   );
 }
